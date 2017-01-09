@@ -58,6 +58,7 @@ void ParticleSystem::AddForce(Force *force){
 
 void ParticleSystem::RemoveForce(std::string name){
     //hmm
+    //could use find force instead
     auto it = std::find_if( fForces.begin(), fForces.end(), [&name](Force* force) {return force->GetName() == name;});
     if (it != fForces.end())
     {
@@ -67,6 +68,22 @@ void ParticleSystem::RemoveForce(std::string name){
         it = fForces.erase( it );
         //if multiple with same name - keep going
     }
+}
+
+//more than one force with same name?
+//can prevent when adding forces - check unique
+Force* ParticleSystem::FindForce(std::string name){
+    Force* force = NULL;
+    for (int i =0; i < fForces.size(); i++){
+        if(fForces[i]->GetName().compare(name) == 0){
+            force = fForces[i];
+        }
+    }
+    if (force == NULL){
+        printf("Error, force not found\n");
+        //will return NULL
+    }
+    return force;
 }
 
 void ParticleSystem::Update() {

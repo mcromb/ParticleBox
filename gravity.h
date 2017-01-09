@@ -13,7 +13,6 @@ public:
     virtual ~Gravity();
 
     Vector2 ApplyForce();
-    std::string GetName() {return "Gravity";}
 
     //could set gravitational constant to diff values
 private:

@@ -3,7 +3,7 @@
 
 Gravity::Gravity()
 {
-
+    fName = "Gravity";
 }
 
 Gravity::~Gravity(){

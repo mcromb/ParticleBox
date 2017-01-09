@@ -41,6 +41,9 @@ public:
     //void RemParticle(int pn); //best way to access?
     void AddForce(Force* force);
     void RemoveForce(std::string name);
+
+    void FindForce(std::string name);
+
     //void ComputeForce();
     //set force on all to zero then move through forces to compute
     //void Integrate(double dt); //RK2? calc and update accell, veloc

@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     clock.cpp \
     force.cpp \
     displaywindow.cpp \
-    controlwindow.cpp
+    controlwindow.cpp \
+    interaction.cpp
 
 HEADERS += \
     Vector2.h \
@@ -29,7 +30,8 @@ HEADERS += \
     clock.h \
     force.h \
     displaywindow.h \
-    controlwindow.h
+    controlwindow.h \
+    interaction.h
 
 FORMS += \
     displaywindow.ui \

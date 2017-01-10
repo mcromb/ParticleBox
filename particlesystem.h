@@ -53,6 +53,11 @@ public:
 
 
     void Update();
+    double GetTimestep() const {return fTimestep;}
+    void SetTimestep(double timestep): fTimestep(timestep){}
+
+    //not const if changing forces
+    std::vector<Particle*> & GetParticles() const { return fParticles;}
 
 private:
     std::vector<Particle*> fParticles;
@@ -71,6 +76,8 @@ private:
 
     //fine clock if this is controlling class
     //#define MS_PER_UPDATE
+
+    double fTimestep;
 
 };
 

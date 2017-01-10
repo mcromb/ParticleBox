@@ -12,6 +12,7 @@ ParticleSystem::ParticleSystem()
     //not ideal - use a default box constructor here?
     fBox = Box(Vector2(-10,-10), Vector2(10,10));
     fWallStatus = kPermeable;
+    fTimestep = 0.01;
 }
 
 ParticleSystem::~ParticleSystem()
@@ -88,8 +89,6 @@ Force* ParticleSystem::FindForce(std::string name){
 
 void ParticleSystem::Update() {
     //elapsed time or just timestep?
-    double timestep = 0.01;
-    //for now
 
     //calculate forces in this too
 
@@ -116,12 +115,12 @@ void ParticleSystem::Update() {
         //conversion factor of pixels per second?
         //position += velocity*time?
         Vector2 pos = (*it)->GetPosition();
-        pos += timestep*((*it)->GetVelocity()) + 0.5*((*it)->GetForce())*timestep*timestep;
+        pos += fTimestep*((*it)->GetVelocity()) + 0.5*((*it)->GetForce())*fTimestep*fTimestep;
         (*it)->SetPosition(pos);
 
         //get velocity then += force*timestep (include mass in calc to make sure acceleration?)?
         Vector2 vel = (*it)->GetVelocity();
-        vel += timestep*((*it)->GetForce());
+        vel += fTimestep*((*it)->GetForce());
         (*it)->SetVelocity(vel);
 
         //if particle is outside the box - delete

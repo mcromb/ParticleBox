@@ -1,10 +1,11 @@
 #include "gravity.h"
-#include "Vector2.h"
 
-Gravity::Gravity()
-{
-    fName = "Gravity";
-}
+#include "Vector2.h"
+#include "Particle.h"
+
+#include <vector>
+
+Gravity::Gravity(): Force("Gravity") {}
 
 Gravity::~Gravity(){
 
@@ -18,8 +19,8 @@ void Gravity::ApplyForce(std::vector<Particle*>& particles){
     //Force is the weight not acceleration
     Vector2 gravity = Vector2(0.0, -fGConst);
     Vector2 weight = gravity;
-    for (int i =0; i < particles.size(); i++){
-        weight = (particles[i].GetMass())*gravity;
-        particles[i].AccumulateForce(weight);
+    for (unsigned int i =0; i < particles.size(); i++){
+        weight = (particles[i]->GetMass())*gravity;
+        particles[i]->AccumulateForce(weight);
     }
 }

@@ -18,7 +18,6 @@ SOURCES += main.cpp \
     force.cpp \
     displaywindow.cpp \
     controlwindow.cpp \
-    interaction.cpp \
     collision.cpp
 
 HEADERS += \
@@ -32,7 +31,6 @@ HEADERS += \
     force.h \
     displaywindow.h \
     controlwindow.h \
-    interaction.h \
     collision.h
 
 FORMS += \

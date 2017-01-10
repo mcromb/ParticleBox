@@ -1,6 +1,7 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
+#include "force.h"
 #include "Particle.h"
 
 #include <vector>

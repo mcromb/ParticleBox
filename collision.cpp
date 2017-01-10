@@ -67,8 +67,8 @@ void Collision::ParticleCollision(Particle & p1, Particle & p2) {
     double u2 = bw.Dot(p2vel);
     //one should be pos and one neg
 
-    double v1 = (u1(p1m-p2m)+2*p2m*u2)/totMass;
-    double v2 = (u2(p2m-p1m)+2*p1m*u1)/totMass;
+    double v1 = (u1*(p1m-p2m)+2*p2m*u2)/totMass;
+    double v2 = (u2*(p2m-p1m)+2*p1m*u1)/totMass;
 
     p1vel += (u1-v1)*bw;
     p2vel += (u2-v2)*bw;
@@ -86,8 +86,8 @@ void Collision::ParticleCollision(Particle & p1, Particle & p2) {
 }
 
 void Collision::ApplyForce(std::vector<Particle*> & particles){
-    for (int i =0; i < particles.size(); i++){
-        for (int j=i+1; j < particles.size(); j++) {
+    for (unsigned int i =0; i < particles.size(); i++){
+        for (unsigned int j=i+1; j < particles.size(); j++) {
             //pass the pointer or the object (fn would use by ref if not pointer)
             if (Collided(*(particles[i]),*(particles[j]))){
                 ParticleCollision(*(particles[i]), *(particles[j]));

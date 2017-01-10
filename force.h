@@ -3,15 +3,17 @@
 
 //#include "particlesystem.h"
 #include "Vector2.h"
+#include "Particle.h"
 
 #include <string>
+#include <vector>
 
-#include "Particle.h"
 
 class Force
 {
 public:
     Force();
+    Force(std::string name): fName(name){}
 
     virtual ~Force();
 

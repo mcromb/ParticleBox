@@ -75,7 +75,7 @@ void ParticleSystem::RemoveForce(std::string name){
 //can prevent when adding forces - check unique
 Force* ParticleSystem::FindForce(std::string name){
     Force* force = NULL;
-    for (int i =0; i < fForces.size(); i++){
+    for (unsigned int i =0; i < fForces.size(); i++){
         if(fForces[i]->GetName().compare(name) == 0){
             force = fForces[i];
         }
@@ -94,7 +94,7 @@ void ParticleSystem::Update() {
     //either loop through and blank all the particles force
     //or set force to zero at end
     for (ForceIterator fit = fForces.begin(); fit != fForces.end(); fit++){
-        (*fit)->ApplyForce();
+        (*fit)->ApplyForce(fParticles);
     }
 
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end();)
@@ -109,7 +109,7 @@ void ParticleSystem::Update() {
         //position += velocity*time?
         Vector2 pos = (*it)->GetPosition();
         Vector2 vel = (*it)->GetVelocity();
-        Vector2 accel = (*it)->GetForce()/(*it)->GetMass();
+        Vector2 accel = ((*it)->GetForce())*(1/(*it)->GetMass());
 
         pos += fTimestep*vel + 0.5*accel*fTimestep*fTimestep;
         (*it)->SetPosition(pos);

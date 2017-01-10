@@ -42,7 +42,7 @@ public:
     void AddForce(Force* force);
     void RemoveForce(std::string name);
 
-    void FindForce(std::string name);
+    Force* FindForce(std::string name);
 
     //void ComputeForce();
     //set force on all to zero then move through forces to compute
@@ -54,10 +54,10 @@ public:
 
     void Update();
     double GetTimestep() const {return fTimestep;}
-    void SetTimestep(double timestep): fTimestep(timestep){}
+    void SetTimestep(double timestep) {fTimestep = (timestep);}
 
     //not const if changing forces
-    std::vector<Particle*> & GetParticles() const { return fParticles;}
+    const std::vector<Particle*> & GetParticles() const { return fParticles;}
 
 private:
     std::vector<Particle*> fParticles;

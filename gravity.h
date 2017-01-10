@@ -6,6 +6,7 @@
 #include "Particle.h"
 
 #include <string>
+#include <vector>
 
 class Gravity : public Force
 {

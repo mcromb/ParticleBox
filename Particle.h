@@ -36,6 +36,10 @@ public:
     const Vector2& GetForce() const {return fForce;}
     void SetForce(const Vector2 & force) {fForce = force;}
 
+    void AccumulateForce(const Vector2 & addedForce) {
+        fForce += addedForce;
+    }
+
     void Print() const;
 
 private:

@@ -15,7 +15,7 @@ public:
 
     virtual ~Force();
 
-    virtual Vector2 ApplyForce(std::vector<Particle*> & ) = 0;
+    virtual void ApplyForce(std::vector<Particle*> & ) = 0;
 
     const std::string& GetName() const {return fName;}
     void SetName(const std::string& name) {fName = name;}

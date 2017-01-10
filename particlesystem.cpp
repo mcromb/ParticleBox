@@ -90,22 +90,15 @@ Force* ParticleSystem::FindForce(std::string name){
 void ParticleSystem::Update() {
     //elapsed time or just timestep?
 
-    //calculate forces in this too
-
+    //force at this point has to be zero
+    //either loop through and blank all the particles force
+    //or set force to zero at end
+    for (ForceIterator fit = fForces.begin(); fit != fForces.end(); fit++){
+        (*fit)->ApplyForce();
+    }
 
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end();)
     {
-        //calculate Force for each particle
-        //iterate through force list
-        Vector2 force = Vector2(0.0,0.0);
-        //or should this be zero each time?
-        //don't think forces are changing with time or are non linear?
-        for (ForceIterator fit = fForces.begin(); fit != fForces.end(); fit++){
-            force += (*fit)->ApplyForce();
-        }
-        (*it)->SetForce(force);
-        //do this first i think
-
         //set position or velocity first?
 
         //suvat assumes constant acceleration within timestep
@@ -115,13 +108,18 @@ void ParticleSystem::Update() {
         //conversion factor of pixels per second?
         //position += velocity*time?
         Vector2 pos = (*it)->GetPosition();
-        pos += fTimestep*((*it)->GetVelocity()) + 0.5*((*it)->GetForce())*fTimestep*fTimestep;
+        Vector2 vel = (*it)->GetVelocity();
+        Vector2 accel = (*it)->GetForce()/(*it)->GetMass();
+
+        pos += fTimestep*vel + 0.5*accel*fTimestep*fTimestep;
         (*it)->SetPosition(pos);
 
-        //get velocity then += force*timestep (include mass in calc to make sure acceleration?)?
-        Vector2 vel = (*it)->GetVelocity();
-        vel += fTimestep*((*it)->GetForce());
+        //get velocity then += force*timestep ?
+        vel += fTimestep*accel;
         (*it)->SetVelocity(vel);
+
+        //clear forces for next update
+        (*it)->SetForce(Vector2(0.0,0.0));
 
         //if particle is outside the box - delete
         //need to deref arg again?

@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include "Particle.h"
+
 class Force
 {
 public:
@@ -13,7 +15,7 @@ public:
 
     virtual ~Force();
 
-    virtual Vector2 ApplyForce() = 0;
+    virtual Vector2 ApplyForce(std::vector<Particle*> & ) = 0;
 
     const std::string& GetName() const {return fName;}
     void SetName(const std::string& name) {fName = name;}

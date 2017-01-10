@@ -1,13 +1,12 @@
 #include "collision.h"
 
+#include "force.h"
 #include "Particle.h"
 
 #include <cmath>
+#include <iostream>
 
-Collision::Collision()
-{
-
-}
+Collision::Collision(): Force("Collision"){}
 
 //p1 = owning particle
 //p2 other particle
@@ -90,6 +89,7 @@ void Collision::ApplyForce(std::vector<Particle*> & particles){
         for (unsigned int j=i+1; j < particles.size(); j++) {
             //pass the pointer or the object (fn would use by ref if not pointer)
             if (Collided(*(particles[i]),*(particles[j]))){
+                //std::cout << "Collided:" << i << ", " << j << std::endl;
                 ParticleCollision(*(particles[i]), *(particles[j]));
                 //this fn should update the acceleration of the particle(s)
             }

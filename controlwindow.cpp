@@ -6,6 +6,7 @@
 #include "DisplayWindow.h"
 
 #include <gravity.h>
+#include <collision.h>
 
 #include <string>
 
@@ -118,3 +119,17 @@ void ControlWindow::on_FuelCB_stateChanged(int state)
         fFuelStatus = kSteady;
     }
 }
+
+void ControlWindow::on_CollisionsCB_stateChanged(int state)
+{
+    if (state == Qt::Checked){
+        //collisions
+        Collision *collision = new Collision();
+        fSystem->AddForce(collision);
+    }else {
+        //remove collisions
+        fSystem->RemoveForce("Collision");
+    }
+}
+// *** IS THIS A MEMORY LEAK? or fine cos deleted in remove force
+//check if not already one?

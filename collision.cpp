@@ -69,8 +69,8 @@ void Collision::ParticleCollision(Particle & p1, Particle & p2) {
     double v1 = (u1*(p1m-p2m)+2*p2m*u2)/totMass;
     double v2 = (u2*(p2m-p1m)+2*p1m*u1)/totMass;
 
-    p1vel += (u1-v1)*bw;
-    p2vel += (u2-v2)*bw;
+    p1vel += (v1-u1)*bw;
+    p2vel += (v2-u2)*bw;
 
     //iterate positions to the right time?
     p1pos -= t*p1vel;

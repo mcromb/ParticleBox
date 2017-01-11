@@ -6,7 +6,7 @@
 Particle::Particle()
 {
     fMass = 1;
-    fRadius = 1;
+    fRadius = 0.1;
 }
 
 Particle::~Particle(){

@@ -15,7 +15,7 @@ ControlWindow::ControlWindow(QWidget *parent) :
     ui(new Ui::ControlWindow)
 {
     fStatus = kIdle;
-    fFuelStatus = kSteady;
+    fFuelStatus = kSteady;    
     fSystem = NULL;
     fWin = NULL;
     ui->setupUi(this);
@@ -80,7 +80,8 @@ void ControlWindow::Fuel() {
     if((fStatus == kRun) && (fFuelStatus == kFuelling))//If it's in Run state and user is fuelling,  fuel it
     {
         //up to a certain particle limit
-        if (fSystem->GetNParticles() < 1000){
+        //if too high, collision algorithm far too slow
+        if (fSystem->GetNParticles() < 500){
             fSystem->fuel(1, Vector2(0,0));
         }
     }
@@ -105,6 +106,10 @@ void ControlWindow::on_GravityCB_stateChanged(int state)
         //gravity
         Gravity *grav = new Gravity();
         fSystem->AddForce(grav);
+        if (fGravSliderStored != -1){
+            //the value has been changed from default
+            grav->SetGravity((double)fGravSliderStored);
+        }
     }else {
         //remove gravity
         fSystem->RemoveForce("Gravity");
@@ -125,7 +130,7 @@ void ControlWindow::on_CollisionsCB_stateChanged(int state)
     if (state == Qt::Checked){
         //collisions
         Collision *collision = new Collision();
-        fSystem->AddForce(collision);
+        fSystem->AddForce(collision);        
     }else {
         //remove collisions
         fSystem->RemoveForce("Collision");
@@ -133,3 +138,13 @@ void ControlWindow::on_CollisionsCB_stateChanged(int state)
 }
 // *** IS THIS A MEMORY LEAK? or fine cos deleted in remove force
 //check if not already one?
+
+void ControlWindow::on_gravSlider_valueChanged(int value)
+{
+    Gravity* force = (Gravity*)fSystem->FindForce("Gravity");
+    if (force != NULL) {
+        force->SetGravity((double)value);
+    }else {
+        fGravSliderStored = value;
+    }
+}

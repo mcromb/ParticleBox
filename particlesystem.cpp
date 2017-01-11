@@ -81,7 +81,7 @@ Force* ParticleSystem::FindForce(std::string name){
         }
     }
     if (force == NULL){
-        printf("Error, force not found\n");
+        //printf("Error, force not found\n");
         //will return NULL
     }
     return force;

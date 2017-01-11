@@ -17,9 +17,12 @@ public:
 
     void ApplyForce(std::vector<Particle*>&);
 
+    void SetGravity(double grav) {fGConst = grav;}
+
     //could set gravitational constant to diff values
 private:
-    double fGConst = 9.80665; //m s-2
+    double fGConst = 9.80665;   //initialising to earth
+    const double fGEarth = 9.80665; //m s-2
 };
 
 #endif // GRAVITY_H

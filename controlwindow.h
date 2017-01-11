@@ -34,6 +34,8 @@ private slots:
 
     void on_CollisionsCB_stateChanged(int arg1);
 
+    void on_gravSlider_valueChanged(int value);
+
 private:
     Ui::ControlWindow *ui;
     ParticleSystem* fSystem;
@@ -50,6 +52,10 @@ private:
         kSteady
     };
     int fFuelStatus;
+
+    int fGravSliderStored = -1;
+    //initialised to a value the slider cannot take
+    //to check whether the slider has moved from default
 };
 
 #endif // CONTROLWINDOW_H

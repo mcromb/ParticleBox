@@ -32,6 +32,8 @@ private slots:
 
     void on_FuelCB_stateChanged(int arg1);
 
+    void on_CollisionsCB_stateChanged(int arg1);
+
 private:
     Ui::ControlWindow *ui;
     ParticleSystem* fSystem;

@@ -31,29 +31,6 @@ double Vector2::Mag() const
    return sqrt(Mag2());
 }
 
-//______________________________________________________________________________
-//double Vector2::Perp() const
-//{
-//   //return the transverse component  (R in cylindrical coordinate system)
-
-//   return sqrt(Perp2());
-//}
-
-/*//______________________________________________________________________________
-double Vector2::Perp(const Vector2 & p) const
-{
-   //return the transverse component (R in cylindrical coordinate system)
-
-   return sqrt(Perp2(p));
-}
-//__*///____________________________________________________________________________
-/*double Vector2::Theta() const
-{
-   //return the polar angle
-   return fX == 0.0 && fY == 0.0 && fZ == 0.0 ? 0.0 : atan2(Perp(),fZ);
-}
-
-//__*///____________________________________________________________________________
 Vector2 Vector2::Unit() const
 {
    // return unit vector parallel to this.
@@ -80,6 +57,13 @@ Vector2 operator * (const Vector2 & p, double a) {
 Vector2 operator * (double a, const Vector2 & p) {
    return Vector2(a*p.X(), a*p.Y());
 }
+
+Vector2 operator / (const Vector2 &v, double a)
+    { return Vector2(v.X()/a, v.Y()/a); }
+
+Vector2 operator / (double a, const Vector2 &v)
+    { return Vector2(a / v.X(), a / v.Y()); }
+
 
 bool operator == (const Vector2 & a, const Vector2 & b) {
    return ((a.X() == b.X()) && (a.Y() == b.Y()) );

@@ -16,35 +16,28 @@ public:
 
     //access methods
     double GetMass() const {return fMass;}
-
     void SetMass(double mass) {fMass = mass;}
 
     double GetRadius() const {return fRadius;}
+    void SetRadius(double radius) {fRadius=radius;}
 
-    void SetRadius(double radius) {fRadius =radius;}
+    const Vector2& GetPosition() const {return fPosition;}
+    void SetPosition(const Vector2& position) {fPosition = (position);}
 
-    const Vector2& GetPosition() const {
-        return fPosition;
-    }
+    double x() const {return fPosition.x();}
+    double y() const {return fPosition.y();}
 
-    void SetPosition(const Vector2& position) {
-        fPosition = position;
-    }
+    const Vector2& GetVelocity() const {return fVelocity;}
+    void SetVelocity(const Vector2& velocity) {fVelocity = (velocity);}
 
-    const Vector2& GetVelocity() const {
-        return fVelocity;
-    }
+    double vx() const {return fVelocity.x();}
+    double vy() const {return fVelocity.y();}
 
-    void SetVelocity(const Vector2& velocity) {
-        fVelocity = velocity;
-    }
+    const Vector2& GetForce() const {return fForce;}
+    void SetForce(const Vector2 & force) {fForce = force;}
 
-    const Vector2& GetForce() const {
-        return fForce;
-    }
-
-    void SetForce(const Vector2 & force) {
-        fForce = force;
+    void AccumulateForce(const Vector2 & addedForce) {
+        fForce += addedForce;
     }
 
     void Print() const;

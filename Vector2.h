@@ -49,26 +49,13 @@ public:
 
 	//inline and const can be used wherever convenient and possible (const cannot be used
 	//if something is modified during the execution) to optimize the code
-	//Scalar product.
+
+    //Scalar product.
     inline double Dot(const Vector2 &) const;
-
-	//The transverse component (R in cylindrical coordinate system).
-    //double Perp() const;
-
-	//The transverse component squared (R^2 in cylindrical coordinate system)
-    //inline double Perp2() const;
-
-	//The transverse component w.r.t. given axis squared.
-    //inline double Perp2(const Vector2 &) const;
-
-	//The transverse component w.r.t. given axis.
-    //double Perp(const Vector2 &) const;
-
-	//The azimuth angle. returns phi from -pi to pi
-    //double Phi() const;
-
-	//The polar angle.
-    //double Theta() const;
+    //Vector product
+    inline double Cross(const Vector2 &) const;
+    //A perpendicular vector (rotation by +90 degrees).
+    inline Vector2 Perp() const;
 
     //The magnitude squared (length of the vector^2).
 	inline double Mag2() const;
@@ -117,6 +104,9 @@ Vector2 operator - (const Vector2 &, const Vector2 &);
 Vector2 operator * (const Vector2 &, double a);
 Vector2 operator * (double a, const Vector2 &);
 
+Vector2 operator / (double a, const Vector2 &);
+Vector2 operator / (const Vector2 &, double a);
+
 //comparison operator
 bool operator == (const Vector2 &, const Vector2 &);
 
@@ -141,7 +131,11 @@ inline void Vector2::SetXY(double xx, double yy) {
    fY = yy;
 }
 
-//inline double Vector2::Perp2() const { return fX*fX + fY*fY; }
+inline Vector2 Vector2::Perp() const {
+    //rotates vector by +90degrees
+    Vector2 p = Vector2(-fY, fX);
+    return p;
+}
 
 inline double Vector2::Mag2() const { return fX*fX + fY*fY; }
 
@@ -149,14 +143,10 @@ inline double Vector2::Dot(const Vector2 & p) const {
    return fX*p.fX + fY*p.fY;
 }
 
-//inline double Vector2::Perp2(const Vector2 & p)  const {
-//   double tot = p.Mag2();
-//   double ss  = Dot(p);
-//   double per = Mag2();
-//   if (tot > 0.0) per -= ss*ss/tot;
-//   if (per < 0)   per = 0;
-//   return per;
-//}
+inline double Vector2::Cross(const Vector2 & p) const {
+    //(scalar - the z component)
+    return (fX*p.fY - fY*p.fX);
+}
 
 //All operators involving assignment return the invoking instance itself
 //by dereferencing the pointer this

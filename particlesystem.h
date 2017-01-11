@@ -41,6 +41,9 @@ public:
     //void RemParticle(int pn); //best way to access?
     void AddForce(Force* force);
     void RemoveForce(std::string name);
+
+    Force* FindForce(std::string name);
+
     //void ComputeForce();
     //set force on all to zero then move through forces to compute
     //void Integrate(double dt); //RK2? calc and update accell, veloc
@@ -50,6 +53,11 @@ public:
 
 
     void Update();
+    double GetTimestep() const {return fTimestep;}
+    void SetTimestep(double timestep) {fTimestep = (timestep);}
+
+    //not const if changing forces
+    const std::vector<Particle*> & GetParticles() const { return fParticles;}
 
 private:
     std::vector<Particle*> fParticles;
@@ -68,6 +76,8 @@ private:
 
     //fine clock if this is controlling class
     //#define MS_PER_UPDATE
+
+    double fTimestep;
 
 };
 

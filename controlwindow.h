@@ -36,6 +36,8 @@ private slots:
 
     void on_gravSlider_valueChanged(int value);
 
+    void on_fuelSlider_valueChanged(int value);
+
 private:
     Ui::ControlWindow *ui;
     ParticleSystem* fSystem;
@@ -52,6 +54,7 @@ private:
         kSteady
     };
     int fFuelStatus;
+    int fFuelSize = 1;
 
     int fGravSliderStored = -1;
     //initialised to a value the slider cannot take

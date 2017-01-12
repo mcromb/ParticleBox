@@ -81,8 +81,9 @@ void ControlWindow::Fuel() {
     {
         //up to a certain particle limit
         //if too high, collision algorithm far too slow
+        //get rid of magic numbers
         if (fSystem->GetNParticles() < 500){
-            fSystem->fuel(1, Vector2(0,0));
+            fSystem->fuel(1, Vector2(0,0), ((double)fFuelSize)/10.0);
         }
     }
 }
@@ -147,4 +148,9 @@ void ControlWindow::on_gravSlider_valueChanged(int value)
     }else {
         fGravSliderStored = value;
     }
+}
+
+void ControlWindow::on_fuelSlider_valueChanged(int value)
+{
+    fFuelSize = value;
 }

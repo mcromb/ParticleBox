@@ -39,7 +39,7 @@ void DisplayWindow::paintEvent(QPaintEvent *)
     //translate coord system so centre is 0,0
     painter.translate(width()/2, height()/2);
     //scale co-ord system so sides are -1,1
-    //(box is -1 to 1)
+    //(box dimensions count - 10 to 10)
 
 
     //painter.fillRect(QRect(0,0,width() - 1, height() - 1), QPalette::Text);
@@ -56,13 +56,16 @@ void DisplayWindow::paintEvent(QPaintEvent *)
         for (int iP = 0; iP < NParticles; iP++) {
             //Get the position of each particle
             Vector2 position = fParticleSystem->GetComponent(iP)->GetPosition();
+            double radius = fParticleSystem->GetComponent(iP)->GetRadius();
+            radius *=0.05*width();
+            //need some way of scaling to keep collisions consistent
 //    		std::cout << fScale << " "; position.Print();}
             //Set the color
             painter.setPen(Qt::blue);
             painter.setBrush(Qt::blue);
             //Draw a dark dot
             //minus needed due to coord system)
-            painter.drawEllipse(position.x()*0.05*width(), -position.y()*0.05*width(), 3,3);
+            painter.drawEllipse(position.x()*0.05*width(), -position.y()*0.05*width(), 2*radius,2*radius);
             //std::cout << "Point drawn" << std::endl;
         }
     }

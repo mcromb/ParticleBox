@@ -26,14 +26,16 @@ double randomFloat()
       return r;
 }
 
-void ParticleSystem::fuel( int particles, Vector2 origin )
+//could overload for diff inputs
+//not sure want to specify radius each time
+void ParticleSystem::fuel( int particles, Vector2 origin, double radius )
 {
     //float angle;
     Particle* particle;
     for( int i = 0; i < particles; i++ )
     {
         //heap allocation - make sure no memory leak
-        particle = new Particle();
+        particle = new Particle(radius);
         particle->SetPosition(origin);
 
         //for any direction
@@ -121,23 +123,19 @@ void ParticleSystem::Update() {
         //clear forces for next update
         (*it)->SetForce(Vector2(0.0,0.0));
 
+        if(fWallStatus == kSolid){ wallBounce(*it);}
+
         //if particle is outside the box - delete
         //need to deref arg again?
         if( !fBox.InsideBox(**it)){
-            if(fWallStatus == kPermeable)
-            {
-                delete (*it);
-                //returns iterator to element after the erased one so should not increment it after this
-                it = fParticles.erase( it );
-                //if at the end, exit (not really a necessary check)
-                if( it == fParticles.end() ) return;
-            } else {
-                //bounce
-                wallBounce(*it);
-                //increment here due to erasure in other arm
-                it++;
-            }
-         }else {
+            //particle is outside the box
+            delete (*it);
+            //returns iterator to element after the erased one so should not increment it after this
+            it = fParticles.erase( it );
+            //if at the end, exit (not really a necessary check)
+            if( it == fParticles.end() ) return;
+
+        }else {
             it++;
         }
     }
@@ -147,19 +145,23 @@ void ParticleSystem::wallBounce(Particle* p) {
     //simple wall bounce (many flaws) - if force pulling outof box, could get trapped outside
     //also no way to get particles to stay at bottom
     //should use particle radii etc
+    //also do the time solving thing prevent the jittering
     double damping = 0.95;
+    Vector2 pos = p->GetPosition();
+    Vector2 vel = p->GetVelocity();
+    double radius = p->GetRadius();
 
-    if (( (p->GetPosition()).X() <= fBox.GetLBound().X() )
-        || ( (p->GetPosition()).X() >= fBox.GetUBound().X() ) )
+    if ( ( (pos.X()-radius <= fBox.GetLBound().X()) && (vel.X() < 0) )
+        || ( (pos.X()+radius >= fBox.GetUBound().X()) && (vel.X() > 0) ) )
     {
         //reverse X velocity
-        p->SetVelocity(damping*Vector2(-(p->GetVelocity().X()), (p->GetVelocity().Y())));
+        p->SetVelocity(damping*Vector2(-(vel.X()), (vel.Y())));
     }
-    if (( (p->GetPosition()).Y() <= fBox.GetLBound().Y() )
-        || ( (p->GetPosition()).Y() >= fBox.GetUBound().Y() ) )
+    if (( (pos.Y()-radius <= fBox.GetLBound().Y()) && (vel.Y() < 0) )
+        || ( (pos.Y()+radius >= fBox.GetUBound().Y()) && (vel.Y() > 0) ) )
     {
         //reverse Y velocity
-        p->SetVelocity(damping*Vector2((p->GetVelocity().X()), -(p->GetVelocity().Y())));
+        p->SetVelocity(damping*Vector2((vel.X()), -(vel.Y())));
     }
 }
 

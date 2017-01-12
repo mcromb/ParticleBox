@@ -33,7 +33,7 @@ public:
 
     Particle * GetComponent(int i){ return fParticles[i];}
 
-    void fuel(int particles, Vector2 origin);
+    void fuel(int particles, Vector2 origin, double radius);
     //pointer to particle?
 
     //void AddParticle(Particle p); //or int particles

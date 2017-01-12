@@ -7,6 +7,7 @@ class Particle
 {
 public:
     Particle();
+    Particle(double radius): fRadius(radius){}
     //want to specify initialisation?
     //want to allow specifically setting variables at creation?
     virtual ~Particle();
@@ -44,10 +45,10 @@ public:
 
 private:
 
-    double fMass;
-    double fRadius;
-    Vector2 fPosition;
-    Vector2 fVelocity;
+    double fMass;       //kg
+    double fRadius;     //m
+    Vector2 fPosition;  //m
+    Vector2 fVelocity;  //m s-1
     //?force
     Vector2 fForce;
 

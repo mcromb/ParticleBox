@@ -49,7 +49,7 @@ void dostuff () {
 
     std::cout << "Particles: " << system.GetNParticles() << std::endl;
 
-    system.fuel(2, Vector2(0.0,0.0));
+    system.fuel(2, Vector2(0.0,0.0),0.1);
 
     std::cout << "Particles: " << system.GetNParticles() << std::endl;
 

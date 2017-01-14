@@ -1,6 +1,5 @@
 #include "box.h"
 #include "Vector2.h"
-#include "walls.h"
 
 
 //http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
@@ -25,7 +24,7 @@ Box::~Box() {
 //smaller than or equal to for lowr bounds because inclusive of first pixel value but not last
 //?
 //partly inside box?
-bool Box::InsideBox(Particle &p) const{
+bool Box::InsideBox(const Particle &p) const{
     Vector2 pos = p.GetPosition();
     double rad = p.GetRadius();
     bool inside = ((pos.X()-rad < fBounds[1].X())

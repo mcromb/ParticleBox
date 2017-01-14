@@ -1,12 +1,16 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Box class header - defines a rectangular boundary and interactions with it.
+*/
+
 #ifndef BOX_H
 #define BOX_H
 
 #include "Vector2.h"
-#include "walls.h"
 #include "Particle.h"
 
-//probably don't actually want walls
-class Box : public Walls
+class Box
 {
 public:
     Box();
@@ -14,11 +18,7 @@ public:
 
     ~Box();
 
-    //check against particle or particle system?
-    //should be virtual method in walls?
-    //bool intersect() const;
-
-    bool InsideBox(Particle &) const;
+    bool InsideBox(const Particle &) const;
 
     Vector2 GetUBound() const { return fBounds[1];}
     Vector2 GetLBound() const { return fBounds[0];}
@@ -27,7 +27,5 @@ private:
     //upper [1] and lower [0] bounds of the (axis aligned) box
     Vector2 fBounds[2];
 };
-
-
 
 #endif // BOX_H

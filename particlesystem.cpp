@@ -165,6 +165,15 @@ void ParticleSystem::wallBounce(Particle* p) {
     }
 }
 
+void ParticleSystem::ClearParticles(){
+    for( ParticleIterator it = fParticles.begin(); it != fParticles.end();){
+        delete (*it);
+        //returns iterator to element after the erased one so should not increment it after this
+        it = fParticles.erase( it );
+        //if at the end, exit
+        if( it == fParticles.end() ) return;
+    }
+}
 
 void ParticleSystem::Print(){
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end(); it++ )

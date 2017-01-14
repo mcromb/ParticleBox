@@ -1,3 +1,11 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Particle class that contains information about
+     the particle state (position, movement, mass, radius etc),
+     and methods to change these states
+*/
+
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
@@ -11,9 +19,6 @@ public:
     //want to specify initialisation?
     //want to allow specifically setting variables at creation?
     virtual ~Particle();
-
-    //perhaps public members would be more efficient for the particles
-    //no b/c then they can be changed accidentally
 
     //access methods
     double GetMass() const {return fMass;}
@@ -45,8 +50,8 @@ public:
 
 private:
 
-    double fMass;       //kg
-    double fRadius;     //m
+    double fMass = 1;       //kg
+    double fRadius = 0.1;     //m
     Vector2 fPosition;  //m
     Vector2 fVelocity;  //m s-1
     //?force

@@ -1,8 +1,9 @@
-/*
- * Vector2.h
- *
- * cite Sergi ThreeVector
- */
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Vector2 class header - defines 2D vectors and vector operations.
+    Adapted from the Object Oriented Programming in C++ course resources ThreeVector class by Antonino Sergi
+*/
 
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
@@ -13,10 +14,8 @@ public:
     Vector2();
     //component constructor.
     Vector2(double x, double y);
-
     //array constructor
     Vector2(const double *);
-
     //copy constructor. passed by reference.
     Vector2(const Vector2 &);
 
@@ -30,6 +29,7 @@ public:
 	//the implementation to be done in the same file. const indicates that the object is not
 	//modified by the execution of the method, thus the compiler can perform some
 	//optimization
+
 	//The components in cartesian coordinate system.
 	inline double x()  const;
 	inline double y()  const;
@@ -52,20 +52,26 @@ public:
 
     //Scalar product.
     inline double Dot(const Vector2 &) const;
-    //Vector product
+    //Vector product (as it returns the 'z' component it is a scalar for 2D case)
     inline double Cross(const Vector2 &) const;
     //A perpendicular vector (rotation by +90 degrees).
     inline Vector2 Perp() const;
 
     //The magnitude squared (length of the vector^2).
 	inline double Mag2() const;
-
     //The magnitude (length of the vector).
 	double Mag() const;
 
+    //Unit vector parallel to this.
+    Vector2 Unit() const;
+
+    //Printing the content in a convenient way
+    void Print() const;
+
 	//Declaration of operators acting on the invoking instance; they could be implemented
 	//here or in the implementation file, if they were not declared inline
-	//Assignment.
+
+    //Assignment.
     inline Vector2 & operator = (const Vector2 &);
 
 	//Addition.
@@ -80,23 +86,17 @@ public:
 	//Scaling with real numbers.
     inline Vector2 & operator *= (double);
 
-	//Unit vector parallel to this.
-    Vector2 Unit() const;
-
-	//Printing the content in a convenient way
-	void Print() const;
-
 private:
-
+    // The components.
     double fX, fY;
-	// The components.
+
 };
 
 //Declaration of operators without an invoking instance. They must be global, thus
 //declared outside the scope of the class
+
 //Addition of 2-vectors.
 Vector2 operator + (const Vector2 &, const Vector2 &);
-
 //Subtraction of 2-vectors.
 Vector2 operator - (const Vector2 &, const Vector2 &);
 
@@ -120,21 +120,12 @@ inline double Vector2::Y()  const { return fY; }
 inline double Vector2::Px() const { return fX; }
 inline double Vector2::Py() const { return fY; }
 
-//want Vx, Vy?
-
 inline void Vector2::SetX(double xx) { fX = xx; }
 inline void Vector2::SetY(double yy) { fY = yy; }
-
 
 inline void Vector2::SetXY(double xx, double yy) {
    fX = xx;
    fY = yy;
-}
-
-inline Vector2 Vector2::Perp() const {
-    //rotates vector by +90degrees
-    Vector2 p = Vector2(-fY, fX);
-    return p;
 }
 
 inline double Vector2::Mag2() const { return fX*fX + fY*fY; }
@@ -146,6 +137,12 @@ inline double Vector2::Dot(const Vector2 & p) const {
 inline double Vector2::Cross(const Vector2 & p) const {
     //(scalar - the z component)
     return (fX*p.fY - fY*p.fX);
+}
+
+inline Vector2 Vector2::Perp() const {
+    //rotates vector by +90degrees
+    Vector2 p = Vector2(-fY, fX);
+    return p;
 }
 
 //All operators involving assignment return the invoking instance itself

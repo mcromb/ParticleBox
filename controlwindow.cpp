@@ -79,17 +79,23 @@ void ControlWindow::createSystem() {
 void ControlWindow::Fuel() {
     if((fStatus == kRun) && (fFuelStatus == kFuelling))//If it's in Run state and user is fuelling,  fuel it
     {
-        //up to a certain particle limit
-        //if too high, collision algorithm far too slow
-        //get rid of magic numbers
-        if (fSystem->GetNParticles() < 500){
-            fSystem->fuel(1, Vector2(0,0), ((double)fFuelSize)/10.0);
+        if (fMode == kWaterfall) {
+            fSystem->fuel(3, Vector2(0,6), 0.1);
+        } else {
+            //up to a certain particle limit
+            //if too high, collision algorithm far too slow
+            //get rid of magic numbers
+            if (fSystem->GetNParticles() < 150){
+                //could do random float - how to include -ve?
+                fSystem->fuel(1, Vector2(0,0), ((double)fFuelSize)/5.0);
+                //fSystem->fuel(1, Vector2((randomFloat()*2)-1,(randomFloat()*2)-1), ((double)fFuelSize)/10.0);
+            }
         }
     }
 }
 
 //Solid/walls
-void ControlWindow::on_checkBox_stateChanged(int state)
+void ControlWindow::on_WallsCB_stateChanged(int state)
 {
     //way to do this with enum (public?)
     if (state == Qt::Checked) {
@@ -153,4 +159,34 @@ void ControlWindow::on_gravSlider_valueChanged(int value)
 void ControlWindow::on_fuelSlider_valueChanged(int value)
 {
     fFuelSize = value;
+}
+
+void ControlWindow::on_waterfallMode_toggled(bool checked)
+{
+    if (checked == true){
+        //Start Waterfall Mode
+        fMode = kWaterfall;
+        if (!(ui->FuelCB->isChecked())){
+            ui->FuelCB->setChecked(Qt::Checked);
+        }
+        if (ui->CollisionsCB->isChecked()){
+            ui->CollisionsCB->setChecked(Qt::Unchecked);
+        }
+        if (!(ui->GravityCB->isChecked())){
+            ui->GravityCB->setChecked(Qt::Checked);
+        }
+        if (ui->WallsCB->isChecked()){
+            ui->WallsCB->setChecked(Qt::Unchecked);
+        }
+    } else{
+        fMode = kBox;
+        if (ui->FuelCB->isChecked()){
+            ui->FuelCB->setChecked(Qt::Unchecked);
+        }
+    }
+}
+
+void ControlWindow::on_ClearB_clicked()
+{
+    fSystem->ClearParticles();
 }

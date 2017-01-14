@@ -12,7 +12,6 @@ SOURCES += main.cpp \
     Particle.cpp \
     particlesystem.cpp \
     box.cpp \
-    walls.cpp \
     gravity.cpp \
     clock.cpp \
     force.cpp \
@@ -25,7 +24,6 @@ HEADERS += \
     Particle.h \
     particlesystem.h \
     box.h \
-    walls.h \
     gravity.h \
     clock.h \
     force.h \

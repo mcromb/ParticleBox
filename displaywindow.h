@@ -1,3 +1,9 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Display Window class header: Shows the behaviour of the particle system
+*/
+
 #ifndef DISPLAYWINDOW_H
 #define DISPLAYWINDOW_H
 

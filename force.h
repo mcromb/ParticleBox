@@ -1,3 +1,10 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Force class header: Purely virtual class that defines the
+     common interface for forces within the system which inherit from this class
+*/
+
 #ifndef FORCES_H
 #define FORCES_H
 
@@ -23,11 +30,8 @@ public:
     void SetName(const std::string& name) {fName = name;}
 
 private:
-
     std::string fName;
-    //not a vector?
-    //ParticleSystem* fParticleSystem;
-    //int fDummy;
+
 };
 
 #endif // FORCES_H

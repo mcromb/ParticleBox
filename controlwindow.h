@@ -1,7 +1,8 @@
 /*  Name: Marion Cromb
     Project: 2D balls in a box
     Date Due: 20/01/17
-    Summary: Control Window class header: Allows user to change parameters of the simulation.
+    Summary: Control Window class header: The control window
+     allows the user to change parameters of the simulation.
 */
 
 #ifndef CONTROLWINDOW_H
@@ -9,8 +10,8 @@
 
 #include <QMainWindow>
 
-#include <particlesystem.h>
-#include <displaywindow.h>
+#include "particlesystem.h"
+#include "displaywindow.h"
 
 namespace Ui {
 class ControlWindow;
@@ -24,23 +25,24 @@ public:
     explicit ControlWindow(QWidget *parent = 0);
     ~ControlWindow();
 
-    void createSystem();
+    void CreateSystem();
 
 private slots:
 
     void Update();
+
     void Fuel();
 
+    //User interaction slots
     void on_runButton_clicked();
 
-    //Change the permeability of the walls
-    void on_WallsCB_stateChanged(int arg1);
+    void on_WallsCB_stateChanged(int state);
 
-    void on_GravityCB_stateChanged(int arg1);
+    void on_GravityCB_stateChanged(int state);
 
-    void on_FuelCB_stateChanged(int arg1);
+    void on_FuelCB_stateChanged(int state);
 
-    void on_CollisionsCB_stateChanged(int arg1);
+    void on_CollisionsCB_stateChanged(int state);
 
     void on_gravSlider_valueChanged(int value);
 
@@ -51,22 +53,25 @@ private slots:
     void on_ClearB_clicked();
 
 private:
-    Ui::ControlWindow *ui;
-    ParticleSystem* fSystem;
+    Ui::ControlWindow *ui;    
     DisplayWindow* fWin;
+    ParticleSystem* fSystem;
 
     enum{
         kIdle,
         kRun
     };
-    int fStatus;
+    int fStatus = kIdle;
+    //initialised to Idle state
 
     enum{
         kFuelling,
         kSteady
     };
-    int fFuelStatus;
+    int fFuelStatus = kSteady;
     int fFuelSize = 1;
+    //Initialised to non-fuelling state
+    //so user can set inital conditions
 
     int fGravSliderStored = -1;
     //initialised to a value the slider cannot take

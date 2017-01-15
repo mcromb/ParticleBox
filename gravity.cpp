@@ -1,3 +1,9 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Implementation of the Gravity force class
+*/
+
 #include "gravity.h"
 
 #include "Vector2.h"

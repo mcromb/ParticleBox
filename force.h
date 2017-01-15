@@ -8,7 +8,6 @@
 #ifndef FORCES_H
 #define FORCES_H
 
-//#include "particlesystem.h"
 #include "Vector2.h"
 #include "Particle.h"
 

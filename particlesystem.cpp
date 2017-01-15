@@ -1,3 +1,9 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Implementation of the ParticleSystem class
+*/
+
 #include "particlesystem.h"
 
 #include "box.h"
@@ -28,7 +34,7 @@ double randomFloat()
 
 //could overload for diff inputs
 //not sure want to specify radius each time
-void ParticleSystem::fuel( int particles, Vector2 origin, double radius )
+void ParticleSystem::AddParticles(int particles, Vector2 origin, double radius )
 {
     //float angle;
     Particle* particle;
@@ -123,7 +129,7 @@ void ParticleSystem::Update() {
         //clear forces for next update
         (*it)->SetForce(Vector2(0.0,0.0));
 
-        if(fWallStatus == kSolid){ wallBounce(*it);}
+        if(fWallStatus == kSolid){ WallBounce(*it);}
 
         //if particle is outside the box - delete
         //need to deref arg again?
@@ -141,7 +147,7 @@ void ParticleSystem::Update() {
     }
 }
 
-void ParticleSystem::wallBounce(Particle* p) {
+void ParticleSystem::WallBounce(Particle* p) {
     //simple wall bounce (many flaws) - if force pulling outof box, could get trapped outside
     //also no way to get particles to stay at bottom
     //should use particle radii etc

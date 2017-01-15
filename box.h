@@ -20,6 +20,7 @@ public:
 
     bool InsideBox(const Particle &) const;
 
+    //Query methods
     Vector2 GetUBound() const { return fBounds[1];}
     Vector2 GetLBound() const { return fBounds[0];}
 

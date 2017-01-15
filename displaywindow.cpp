@@ -1,9 +1,17 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Implementation of the display window of the GUI,
+     showing the state of the system of balls
+*/
+
 #include "displaywindow.h"
 #include "ui_displaywindow.h"
 
 #include "Vector2.h"
 #include "particlesystem.h"
 #include "Particle.h"
+
 #include <iostream>
 
 #include <QPainter>

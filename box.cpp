@@ -1,29 +1,30 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Box class implementation.
+*/
+
 #include "box.h"
 #include "Vector2.h"
 
 
-//http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
-
 Box::Box()
 {
-
+    //create a 20x20 square box centered at 0,0.
+    fBounds[0] = Vector2(-10,-10);
+    fBounds[1] = Vector2(10,10);
 }
 
 Box::~Box() {
 
 }
 
-//bool Box::intersect() const
-//{
-
-//}
-
-//need to also think about case on edge of box - important for bouncing
-//may need to change to 'or equal'
-//or return which wall its hit
-//smaller than or equal to for lowr bounds because inclusive of first pixel value but not last
-//?
-//partly inside box?
+/* ***METHOD***
+    Name:   InsideBox
+    IN:     p       - particle to test
+    OUT:    inside  - true if the particle is partly or wholly in the box
+    About:  Tests if any part of particle p is in the box
+*/
 bool Box::InsideBox(const Particle &p) const{
     Vector2 pos = p.GetPosition();
     double rad = p.GetRadius();

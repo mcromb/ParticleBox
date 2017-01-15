@@ -15,9 +15,11 @@ class Particle
 {
 public:
     Particle();
-    Particle(double radius): fRadius(radius){}
-    //want to specify initialisation?
-    //want to allow specifically setting variables at creation?
+    Particle(double radius): fRadius(radius) {}
+    Particle(Vector2 pos): fPosition(pos){}
+    Particle(Vector2 pos, Vector2 vel): fPosition(pos), fVelocity(vel){}
+    Particle(double, double, Vector2 pos, Vector2 vel, Vector2 force);
+
     virtual ~Particle();
 
     //access methods
@@ -42,6 +44,9 @@ public:
     const Vector2& GetForce() const {return fForce;}
     void SetForce(const Vector2 & force) {fForce = force;}
 
+    double fx() const {return fForce.x();}
+    double fy() const {return fForce.y();}
+
     void AccumulateForce(const Vector2 & addedForce) {
         fForce += addedForce;
     }
@@ -51,14 +56,11 @@ public:
 private:
 
     double fMass = 1;       //kg
-    double fRadius = 0.1;     //m
-    Vector2 fPosition;  //m
-    Vector2 fVelocity;  //m s-1
-    //?force
-    Vector2 fForce;
+    double fRadius = 0.1;   //m
+    Vector2 fPosition;      //m
+    Vector2 fVelocity;      //m s-1
+    Vector2 fForce;         //kg m s-2
 
-    //colour?
-    //type? (could determine force or particle system could do)
 };
 
 #endif // PARTICLE_H

@@ -13,7 +13,6 @@ SOURCES += main.cpp \
     particlesystem.cpp \
     box.cpp \
     gravity.cpp \
-    clock.cpp \
     force.cpp \
     displaywindow.cpp \
     controlwindow.cpp \
@@ -25,7 +24,6 @@ HEADERS += \
     particlesystem.h \
     box.h \
     gravity.h \
-    clock.h \
     force.h \
     displaywindow.h \
     controlwindow.h \

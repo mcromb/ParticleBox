@@ -25,10 +25,11 @@ public:
     void ApplyForce(std::vector<Particle*>&);
 
     void SetGravity(double grav) {fGConst = grav;}
-    const double GetGEarth() const {return fGEarth;}
+
+    double GetGEarth() {return fGEarth;}
 
 private:
-    double fGConst = 9.80665;   //initialising to earth
+    double fGConst = 9.80665;   //initialising to earth's
     const double fGEarth = 9.80665; //m s-2
 };
 

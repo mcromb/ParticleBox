@@ -1,10 +1,12 @@
-/*
- * Vector2.cpp
- *
- * cite Sergi
- */
+/*  Name: Marion Cromb
+    Project: 2D Balls in a box
+    Date Due: 20/01/17
+    Summary: Vector2 class implementation.
+    Adapted from
+    'Object Orientated Programming in C++' course resources by Antonino Sergi
+*/
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 
 #include "Vector2.h"

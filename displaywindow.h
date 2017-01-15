@@ -11,7 +11,6 @@
 #include <QItemSelection>
 #include <QWidget>
 
-
 #include "particlesystem.h"
 
 namespace Ui {
@@ -26,6 +25,7 @@ public:
     explicit DisplayWindow(ParticleSystem *, QWidget *parent = 0);
     ~DisplayWindow();
 
+    //access methods
     ParticleSystem *GetParticleSystem() const { return fParticleSystem; }
     void SetParticleSystem(ParticleSystem *system) { fParticleSystem = system; }
 

@@ -122,6 +122,7 @@ void ControlWindow::on_runButton_clicked()
 
 /* ***METHOD***
     Name:  on_WallsCB_stateChanged
+    IN:    state   - box checked or unchecked
     About: Toggles the solidity of the walls
 */
 void ControlWindow::on_WallsCB_stateChanged(int state)
@@ -137,6 +138,7 @@ void ControlWindow::on_WallsCB_stateChanged(int state)
 
 /* ***METHOD***
     Name:  on_GravityCB_stateChanged
+    IN:    state   - box checked or unchecked
     About: Toggles the gravity of the situation
 */
 void ControlWindow::on_GravityCB_stateChanged(int state)
@@ -157,6 +159,7 @@ void ControlWindow::on_GravityCB_stateChanged(int state)
 
 /* ***METHOD***
     Name:  on_FuelCB_stateChanged
+    IN:    state   - box checked or unchecked
     About: Toggles the fuelling of the system
 */
 void ControlWindow::on_FuelCB_stateChanged(int state)
@@ -170,12 +173,13 @@ void ControlWindow::on_FuelCB_stateChanged(int state)
 
 /* ***METHOD***
     Name:  on_CollisionsCB_stateChange
-    About: Toggles the fuelling of the system
+    IN:    state   - box checked or unchecked
+    About: Toggles whether collision forces are active
 */
 void ControlWindow::on_CollisionsCB_stateChanged(int state)
 {
     if (state == Qt::Checked){
-        //collisions
+        //add collisions
         Collision *collision = new Collision();
         fSystem->AddForce(collision);        
     }else {
@@ -183,24 +187,42 @@ void ControlWindow::on_CollisionsCB_stateChanged(int state)
         fSystem->RemoveForce("Collision");
     }
 }
-// *** IS THIS A MEMORY LEAK? or fine cos deleted in remove force
-//check if not already one?
 
+/* ***METHOD***
+    Name:  on_gravSlider_valueChanged
+    IN:    value   - integer value for gravitational acceleration
+    About: Changes the strength of the gravitational field
+     (between the slider max and min values)
+*/
 void ControlWindow::on_gravSlider_valueChanged(int value)
 {
     Gravity* force = (Gravity*)fSystem->FindForce("Gravity");
     if (force != NULL) {
+        //if gravity is active in the system change the value
         force->SetGravity((double)value);
     }else {
+        //note that the gravity slider value has changed and
+        //store the value in case gravity is activated later
         fGravSliderStored = value;
     }
 }
 
+/* ***METHOD***
+    Name:  on_fuelSlider_valueChanged
+    IN:    value   - integer value for a fuel size
+    About: Changes the size of new particles (between the slider max and min values)
+      value is proportional to the radius of added particles.
+*/
 void ControlWindow::on_fuelSlider_valueChanged(int value)
 {
     fFuelSize = value;
 }
 
+/* ***METHOD***
+    Name:  on_waterfallMode_toggled
+    IN:    checked   - mode checked or unchecked
+    About: Toggles
+*/
 void ControlWindow::on_waterfallMode_toggled(bool checked)
 {
     if (checked == true){

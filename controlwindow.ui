@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>ControlWindow</class>
  <widget class="QMainWindow" name="ControlWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>225</width>
-    <height>167</height>
+    <width>223</width>
+    <height>187</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
+      <y>20</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -28,10 +31,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="WallsCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>58</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -41,10 +47,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="GravityCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>118</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -54,10 +63,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="FuelCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
+      <y>98</y>
       <width>61</width>
       <height>17</height>
      </rect>
@@ -67,10 +79,13 @@
     </property>
    </widget>
    <widget class="QSlider" name="gravSlider">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>100</y>
+      <y>118</y>
       <width>121</width>
       <height>19</height>
      </rect>
@@ -86,10 +101,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="CollisionsCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>60</y>
+      <y>78</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -99,10 +117,13 @@
     </property>
    </widget>
    <widget class="QSlider" name="fuelSlider">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>80</y>
+      <y>98</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -121,10 +142,13 @@
     </property>
    </widget>
    <widget class="QRadioButton" name="waterfallMode">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>50</y>
+      <y>68</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -134,10 +158,13 @@
     </property>
    </widget>
    <widget class="QPushButton" name="ClearB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>10</y>
+      <y>30</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -146,13 +173,26 @@
      <string>Clear the box</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>To start the simulation press Run</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>225</width>
+     <width>223</width>
      <height>21</height>
     </rect>
    </property>
@@ -168,7 +208,7 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>55</x>
+     <x>145</x>
      <y>80</y>
     </hint>
     <hint type="destinationlabel">
@@ -184,12 +224,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>22</x>
+     <x>112</x>
      <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>142</x>
-     <y>41</y>
+     <x>22</x>
+     <y>71</y>
     </hint>
    </hints>
   </connection>
@@ -204,8 +244,8 @@
      <y>76</y>
     </hint>
     <hint type="destinationlabel">
-     <x>148</x>
-     <y>62</y>
+     <x>28</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
@@ -216,7 +256,7 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>78</x>
+     <x>168</x>
      <y>81</y>
     </hint>
     <hint type="destinationlabel">
@@ -232,7 +272,7 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
+     <x>160</x>
      <y>79</y>
     </hint>
     <hint type="destinationlabel">

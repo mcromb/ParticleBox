@@ -37,6 +37,8 @@ ControlWindow::ControlWindow(QWidget *parent) :
 
 ControlWindow::~ControlWindow()
 {
+    //constructor has placed ui on heap
+    //so destructor must delete to prevent memory leak
     delete ui;
 }
 
@@ -221,13 +223,15 @@ void ControlWindow::on_fuelSlider_valueChanged(int value)
 /* ***METHOD***
     Name:  on_waterfallMode_toggled
     IN:    checked   - mode checked or unchecked
-    About: Toggles
+    About: Toggles between waterfall mode and normal mode.
 */
 void ControlWindow::on_waterfallMode_toggled(bool checked)
 {
     if (checked == true){
         //Start Waterfall Mode
         fMode = kWaterfall;
+        //Set changes to checkboxes for Waterfall mode
+        //The checkboxes are disabled to user input by other slots
         if (!(ui->FuelCB->isChecked())){
             ui->FuelCB->setChecked(Qt::Checked);
         }
@@ -242,12 +246,18 @@ void ControlWindow::on_waterfallMode_toggled(bool checked)
         }
     } else{
         fMode = kBox;
+        //Switch off fuelling after changing back to box mode so the
+        //transition is less confusing
         if (ui->FuelCB->isChecked()){
             ui->FuelCB->setChecked(Qt::Unchecked);
         }
     }
 }
 
+/* ***METHOD***
+    Name:  on_ClearB_clicked()
+    About: Removes all particles currently stored in the particle system.
+*/
 void ControlWindow::on_ClearB_clicked()
 {
     fSystem->ClearParticles();

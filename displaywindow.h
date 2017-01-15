@@ -36,6 +36,10 @@ private:
     Ui::DisplayWindow *ui;
 
     ParticleSystem* fParticleSystem;
+
+    double fBoxSize;
+    double fScale;
+
     //double fScale;
 };
 

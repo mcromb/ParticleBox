@@ -24,6 +24,14 @@ public:
     Vector2 GetUBound() const { return fBounds[1];}
     Vector2 GetLBound() const { return fBounds[0];}
 
+    double GetHeight() const {
+        return (fBounds[1] - Vector2(fBounds[1].x(), fBounds[0].y())).Mag();
+    }
+
+    double GetWidth() const {
+        return (Vector2(fBounds[0].x(), fBounds[1].y()) - fBounds[1]).Mag();
+    }
+
 private:
     //upper [1] and lower [0] bounds of the (axis aligned) box
     Vector2 fBounds[2];

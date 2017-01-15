@@ -47,6 +47,8 @@ public:
 
     double GetMaxColliding() const {return fMaxColliding;}
 
+    const Box & GetBox() const {return fBox;}
+
     void SetWallStatus(int status) {fWallStatus = status;}
 
     double GetTimestep() const {return fTimestep;}

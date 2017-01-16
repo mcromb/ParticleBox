@@ -53,7 +53,9 @@ DisplayWindow::~DisplayWindow()
 void DisplayWindow::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+
+    //antialiasing makes graphics nicer, but makes drawing the scene lag
+    //painter.setRenderHint(QPainter::Antialiasing);
 
     //translate coord system so the centre is 0,0
     painter.translate((width()/2), (height()/2));
@@ -68,11 +70,15 @@ void DisplayWindow::paintEvent(QPaintEvent *)
         for (int iP = 0; iP < NParticles; iP++) {
             //Get the position and radius of each particle
             Vector2 position = fParticleSystem->GetComponent(iP)->GetPosition();
-            double radius = fParticleSystem->GetComponent(iP)->GetRadius();
-            double pxDiameter = 2*radius*fScale;
+            double pxDiameter = fParticleSystem->GetComponent(iP)->GetRadius()*2*fScale;
+
             //draw a circle at each particle position
-            //(minus y needed due to QT coord system)
-            painter.drawEllipse(position.x()*fScale, -position.y()*fScale, pxDiameter, pxDiameter);
+            //(minus y needed due to QT co-ord system, and
+            //-0.5*pxDiameter needed because the QT ellipse is defined from the
+            //top left corner of a rectangle, not its centre )
+            painter.drawEllipse(position.x()*fScale-0.5*pxDiameter,
+                                -position.y()*fScale-0.5*pxDiameter,
+                                pxDiameter, pxDiameter);
         }
     }
 }

@@ -28,6 +28,11 @@ Particle::Particle(double mass,
 Particle::~Particle(){
 }
 
+/* ***METHOD***
+    Name:   Print
+    About:  Utility method, prints the particle information.
+     Useful for debugging.
+*/
 void Particle::Print() const{
     std::cout << "Mass: " << fMass << std::endl;
     std::cout << "Radius: " << fRadius <<std::endl;

@@ -15,72 +15,95 @@
 
 ParticleSystem::ParticleSystem()
 {
-    //not ideal - use a default box constructor here?
-    fBox = Box(Vector2(-10,-10), Vector2(10,10));
+    fBox = Box();
     fWallStatus = kPermeable;
-    fTimestep = 0.01;
+    fTimestep = 0.01;   //time granularity of the system
 }
 
 ParticleSystem::~ParticleSystem()
 {
-//remove vector of particles? - and the particles themselves (not just the pointers)
+
 }
 
-double randomFloat()
+/* ***FUNCTION***
+    Name:   RandomDouble
+    OUT:    r - a random double between -1 and 1
+    About:  Returns a random double between -1 and 1
+*/
+double RandomDouble()
 {
       double r = (double)rand()/(double)RAND_MAX;
+      r = (r*2)-1;
       return r;
 }
 
-//could overload for diff inputs
-//not sure want to specify radius each time
+/* ***METHOD***
+    Name:   AddParticles
+    IN:     particles   - the number of particles to add
+            origin      - the place to add the particles
+            radius      - the size of the particles' radius
+    About:  Adds particles (on the heap) into the system particle vector
+     with specified origin and size. These lifetime of these particles is until
+     they leave the box dimensions and are deleted or are cleared with ClearParticles()
+*/
 void ParticleSystem::AddParticles(int particles, Vector2 origin, double radius )
 {
-    //float angle;
     Particle* particle;
     for( int i = 0; i < particles; i++ )
     {
-        //heap allocation - make sure no memory leak
         particle = new Particle(radius);
         particle->SetPosition(origin);
 
-        //for any direction
-        //for one direction remove offset
-        particle->SetVelocity(Vector2(-3+6*randomFloat(),-3+6*randomFloat()));
-        //particle->SetVelocity(Vector2(0.5,0.5)); // Easily detected
+        //Sets velocity in any direction between +/-fMaxSpeed
+        //for a smaller range of directions can use abs(RandomDouble())
+        particle->SetVelocity(fMaxSpeed*Vector2(RandomDouble(),RandomDouble()));
 
-        //randomise this velocity
-
+        //don't add particle if it happens to be staying still
         if( particle->GetVelocity() == Vector2(0.0, 0.0) )
         {
             delete particle;
             continue;
         }
-
+        //add to fParticles vector
         fParticles.push_back( particle );
     }
 }
 
+/* ***METHOD***
+    Name:   AddForce
+    IN:     force   - the force to add to the system
+    About:  Adds a force to the system's container of forces
+*/
 void ParticleSystem::AddForce(Force *force){
     fForces.push_back( force );
 }
 
+/* ***METHOD***
+    Name:   RemoveForce
+    IN:     name   - the name of the force to remove from the system
+    About:  Finds and removes a named force from the system container
+     (Uses a different finding algorithm to FindForce)
+*/
 void ParticleSystem::RemoveForce(std::string name){
-    //hmm
-    //could use find force instead
     auto it = std::find_if( fForces.begin(), fForces.end(), [&name](Force* force) {return force->GetName() == name;});
     if (it != fForces.end())
     {
-        // found element. it is an iterator to the first matching element.
+        //found an iterator to the first matching force.
+        //delete the force
         delete (*it);
-        //returns iterator to element after the erased one
+        //erase the corresponding element of the force vector
         it = fForces.erase( it );
-        //if multiple with same name - keep going
+        //returns iterator to element after the erased one
+        //(so if multiple with same name, possible to extend this as a loop)
     }
 }
 
-//more than one force with same name?
-//can prevent when adding forces - check unique
+/* ***METHOD***
+    Name:   FindForce
+    IN:     name    - the name of the force to find in the system
+    OUT:    force   - a pointer to the named force if it exists, otherwise NULL
+    About:  Finds a named force within the system container
+*/
 Force* ParticleSystem::FindForce(std::string name){
     Force* force = NULL;
     for (unsigned int i =0; i < fForces.size(); i++){
@@ -89,40 +112,41 @@ Force* ParticleSystem::FindForce(std::string name){
         }
     }
     if (force == NULL){
-        //printf("Error, force not found\n");
-        //will return NULL
+        //function will return NULL
     }
     return force;
 }
 
+/* ***METHOD***
+    Name:   Update
+    About:  Updates the state of the system, evolving it by time fTimestep.
+     When this function is called, the force on all particles should be zero,
+     so any forces can accumulate on the particle each time.
+     This is ensured by clearing the force on the particle after the new
+     positions and velocities have been set.
+*/
 void ParticleSystem::Update() {
-    //elapsed time or just timestep?
 
-    //force at this point has to be zero
-    //either loop through and blank all the particles force
-    //or set force to zero at end
+    //apply each force to the particles in the system
     for (ForceIterator fit = fForces.begin(); fit != fForces.end(); fit++){
         (*fit)->ApplyForce(fParticles);
     }
 
+    //loop through the particles evolving positions and velocities
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end();)
     {
-        //set position or velocity first?
-
         //suvat assumes constant acceleration within timestep
         //s = ut + 0.5 at^2
         //v = u + at
 
-        //conversion factor of pixels per second?
-        //position += velocity*time?
         Vector2 pos = (*it)->GetPosition();
         Vector2 vel = (*it)->GetVelocity();
+        //convert force to acceleration for each particle
         Vector2 accel = ((*it)->GetForce())*(1/(*it)->GetMass());
 
         pos += fTimestep*vel + 0.5*accel*fTimestep*fTimestep;
         (*it)->SetPosition(pos);
 
-        //get velocity then += force*timestep ?
         vel += fTimestep*accel;
         (*it)->SetVelocity(vel);
 
@@ -131,56 +155,67 @@ void ParticleSystem::Update() {
 
         if(fWallStatus == kSolid){ WallBounce(*it);}
 
-        //if particle is outside the box - delete
-        //need to deref arg again?
+        //if particle is now outside the box - delete it
         if( !fBox.InsideBox(**it)){
-            //particle is outside the box
             delete (*it);
-            //returns iterator to element after the erased one so should not increment it after this
+            //returns iterator to element after the erased one so
+            //should not increment it in this branch
             it = fParticles.erase( it );
-            //if at the end, exit (not really a necessary check)
+            //if at the end, exit
             if( it == fParticles.end() ) return;
-
         }else {
             it++;
         }
     }
 }
 
+/* ***METHOD***
+    Name:   WallBounce
+    IN:     p   - the particle to check for collision with wall
+    About:  If the particle is moving out through a wall, collide the particle
+     with the wall and send it back again. If fWallDamping = 1 the collision is elastic,
+     otherwise the ball loses energy. This function is only called if the walls are solid.
+*/
 void ParticleSystem::WallBounce(Particle* p) {
-    //simple wall bounce (many flaws) - if force pulling outof box, could get trapped outside
-    //also no way to get particles to stay at bottom
-    //should use particle radii etc
-    //also do the time solving thing prevent the jittering
-    double damping = 0.95;
     Vector2 pos = p->GetPosition();
     Vector2 vel = p->GetVelocity();
     double radius = p->GetRadius();
 
+    //if part of particle is outside the X bounds and travelling out of the box
     if ( ( (pos.X()-radius <= fBox.GetLBound().X()) && (vel.X() < 0) )
         || ( (pos.X()+radius >= fBox.GetUBound().X()) && (vel.X() > 0) ) )
     {
         //reverse X velocity
-        p->SetVelocity(damping*Vector2(-(vel.X()), (vel.Y())));
+        p->SetVelocity(fWallDamping*Vector2(-(vel.X()), (vel.Y())));
     }
+    //if part of particle is outside the Y bounds and travelling out of the box
     if (( (pos.Y()-radius <= fBox.GetLBound().Y()) && (vel.Y() < 0) )
         || ( (pos.Y()+radius >= fBox.GetUBound().Y()) && (vel.Y() > 0) ) )
     {
         //reverse Y velocity
-        p->SetVelocity(damping*Vector2((vel.X()), -(vel.Y())));
+        p->SetVelocity(fWallDamping*Vector2((vel.X()), -(vel.Y())));
     }
 }
 
+/* ***METHOD***
+    Name:   ClearParticles
+    About:  Removes all the particles from the system.
+*/
 void ParticleSystem::ClearParticles(){
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end();){
         delete (*it);
-        //returns iterator to element after the erased one so should not increment it after this
+        //returns iterator to element after the erased one so should not increment it additionally
         it = fParticles.erase( it );
         //if at the end, exit
         if( it == fParticles.end() ) return;
     }
 }
 
+/* ***METHOD***
+    Name:   Print
+    About:  Utility method to print info on all the particles in the system.
+        Useful for debugging systems with small numbers of particles.
+*/
 void ParticleSystem::Print(){
     for( ParticleIterator it = fParticles.begin(); it != fParticles.end(); it++ )
     {

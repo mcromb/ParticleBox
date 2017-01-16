@@ -32,7 +32,7 @@ ControlWindow::ControlWindow(QWidget *parent) :
 
     QTimer *fueltimer = new QTimer(this);
     connect(fueltimer, SIGNAL(timeout()), this, SLOT(Fuel()));
-    fueltimer->start(10);
+    fueltimer->start(17);
 }
 
 ControlWindow::~ControlWindow()
@@ -81,8 +81,11 @@ void ControlWindow::Fuel() {
             if (fSystem->GetNParticles() < fSystem->GetMaxColliding()){
                 //Add particles from centre:
                 //fSystem->AddParticles(1, Vector2(0,0), ((double)fFuelSize)/10.0);
-                //add particles anywhere in box
-                fSystem->AddParticles(1, Vector2(10*((randomFloat()*2)-1),10*((randomFloat()*2)-1)), ((double)fFuelSize)/10.0);
+                //add particles anywhere in box:
+                fSystem->AddParticles(1,
+                                      Vector2((fSystem->GetBox().GetWidth())*0.5*(RandomDouble()),
+                                              (fSystem->GetBox().GetHeight())*0.5*(RandomDouble())),
+                                      ((double)fFuelSize)/10.0);
             }
         }
     }
@@ -261,4 +264,14 @@ void ControlWindow::on_waterfallMode_toggled(bool checked)
 void ControlWindow::on_ClearB_clicked()
 {
     fSystem->ClearParticles();
+}
+
+/* ***METHOD***
+    Name:  on_dampingSlider_valueChanged
+    IN:    value   - integer value for damping
+    About: Changes the percentage of velocity conserved when a particle collides with a wall
+*/
+void ControlWindow::on_dampingSlider_valueChanged(int value)
+{
+    fSystem->SetWallDamping((double)value/100.0);
 }

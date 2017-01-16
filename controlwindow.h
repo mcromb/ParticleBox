@@ -52,6 +52,8 @@ private slots:
 
     void on_ClearB_clicked();
 
+    void on_dampingSlider_valueChanged(int value);
+
 private:
     Ui::ControlWindow *ui;    
     DisplayWindow* fWin;

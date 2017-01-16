@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>223</width>
-    <height>187</height>
+    <width>228</width>
+    <height>223</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>42</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -37,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>58</y>
+      <y>80</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -53,7 +53,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>118</y>
+      <y>140</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -69,7 +69,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>98</y>
+      <y>120</y>
       <width>61</width>
       <height>17</height>
      </rect>
@@ -85,7 +85,7 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>118</y>
+      <y>140</y>
       <width>121</width>
       <height>19</height>
      </rect>
@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>78</y>
+      <y>100</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -123,7 +123,7 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>98</y>
+      <y>120</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -132,7 +132,10 @@
      <number>1</number>
     </property>
     <property name="maximum">
-     <number>3</number>
+     <number>5</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -148,7 +151,7 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>68</y>
+      <y>90</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -164,7 +167,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>30</y>
+      <y>52</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -178,12 +181,47 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>181</width>
-      <height>16</height>
+      <width>201</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>To start the simulation press Run</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To start the simulation press Run, &lt;br&gt;&lt;/br&gt;then check Fuel to add balls&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="dampingSlider">
+    <property name="geometry">
+     <rect>
+      <x>89</x>
+      <y>160</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>50</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="sliderPosition">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Damping:</string>
     </property>
    </widget>
   </widget>
@@ -192,7 +230,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>223</width>
+     <width>228</width>
      <height>21</height>
     </rect>
    </property>

@@ -47,6 +47,8 @@ public:
 
     double GetMaxColliding() const {return fMaxColliding;}
 
+    void SetWallDamping(double damping) {fWallDamping = damping;}
+
     const Box & GetBox() const {return fBox;}
 
     void SetWallStatus(int status) {fWallStatus = status;}
@@ -60,7 +62,13 @@ private:
     std::vector<Particle*> fParticles;
     std::vector<Force*> fForces;
 
+    //Limits number of colliding particles
+    //The program can deal with 150 before lagging
     int fMaxColliding = 150;
+
+    double fMaxSpeed = 3.0;
+
+    double fWallDamping = 0.95; //1 corresponds to no damping
 
     Box fBox;
 
@@ -73,6 +81,6 @@ private:
     double fTimestep;
 };
 
-double randomFloat();
+double RandomDouble();
 
 #endif // PARTICLESYSTEM_H

@@ -1,13 +1,19 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Particle system class that contains a set of particles,
+     the container of the particles, and the forces active in the system
+*/
+
 #ifndef PARTICLESYSTEM_H
 #define PARTICLESYSTEM_H
 
 #include <vector>
 #include <string>
 
-#include <Particle.h>
-#include <box.h>
-#include <force.h>
-
+#include "Particle.h"
+#include "box.h"
+#include "force.h"
 
 typedef std::vector<Particle*>::iterator ParticleIterator;
 typedef std::vector<Force*>::iterator ForceIterator;
@@ -19,68 +25,62 @@ public:
 
     virtual ~ParticleSystem();
 
-    //process input?
-    //virtual?
+    void Update();
 
-    //virtual void Render();
+    void WallBounce(Particle*);
 
-    void setWallStatus(int status) {fWallStatus = status;}
-
-    void Print();
-
-    //either straight from the vector or update member from the vector?
+    //particle access/interaction methods
     int GetNParticles(){return fParticles.size();}
+
+    const std::vector<Particle*> & GetParticles() const { return fParticles;}
 
     Particle * GetComponent(int i){ return fParticles[i];}
 
-    void fuel(int particles, Vector2 origin);
-    //pointer to particle?
+    void AddParticles(int particles, Vector2 origin, double radius);
 
-    //void AddParticle(Particle p); //or int particles
+    void ClearParticles();
 
-    //void RemParticle(int pn); //best way to access?
+    //other access methods
     void AddForce(Force* force);
+    Force* FindForce(std::string name);
     void RemoveForce(std::string name);
 
-    Force* FindForce(std::string name);
+    double GetMaxColliding() const {return fMaxColliding;}
 
-    //void ComputeForce();
-    //set force on all to zero then move through forces to compute
-    //void Integrate(double dt); //RK2? calc and update accell, veloc
-    //print method?
+    void SetWallDamping(double damping) {fWallDamping = damping;}
 
-    void wallBounce(Particle*);
+    const Box & GetBox() const {return fBox;}
 
+    void SetWallStatus(int status) {fWallStatus = status;}
 
-    void Update();
     double GetTimestep() const {return fTimestep;}
     void SetTimestep(double timestep) {fTimestep = (timestep);}
 
-    //not const if changing forces
-    const std::vector<Particle*> & GetParticles() const { return fParticles;}
+    void Print();
 
 private:
     std::vector<Particle*> fParticles;
     std::vector<Force*> fForces;
-    //int fNParticles;
-    //max particles? - vectors are dynamic thjo
-    //total energy?
+
+    //Limits number of colliding particles
+    //The program can deal with 150 before lagging
+    int fMaxColliding = 150;
+
+    double fMaxSpeed = 3.0;
+
+    double fWallDamping = 0.95; //1 corresponds to no damping
 
     Box fBox;
-    //not pointer
+
     enum{
         kSolid,
         kPermeable
     };
     int fWallStatus;
 
-    //fine clock if this is controlling class
-    //#define MS_PER_UPDATE
-
     double fTimestep;
-
 };
 
-double randomFloat();
+double RandomDouble();
 
 #endif // PARTICLESYSTEM_H

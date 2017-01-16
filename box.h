@@ -1,12 +1,16 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Box class header - defines a rectangular boundary and interactions with it.
+*/
+
 #ifndef BOX_H
 #define BOX_H
 
 #include "Vector2.h"
-#include "walls.h"
 #include "Particle.h"
 
-//probably don't actually want walls
-class Box : public Walls
+class Box
 {
 public:
     Box();
@@ -14,29 +18,23 @@ public:
 
     ~Box();
 
-    //check against particle or particle system?
-    //should be virtual method in walls?
-    //bool intersect() const;
+    bool InsideBox(const Particle &) const;
 
-    inline bool InsideBox(Particle &) const;
-
+    //Query methods
     Vector2 GetUBound() const { return fBounds[1];}
     Vector2 GetLBound() const { return fBounds[0];}
+
+    double GetHeight() const {
+        return (fBounds[1] - Vector2(fBounds[1].x(), fBounds[0].y())).Mag();
+    }
+
+    double GetWidth() const {
+        return (Vector2(fBounds[0].x(), fBounds[1].y()) - fBounds[1]).Mag();
+    }
 
 private:
     //upper [1] and lower [0] bounds of the (axis aligned) box
     Vector2 fBounds[2];
 };
-
-//need to also think about case on edge of box - important for bouncing
-//may need to change to 'or equal'
-//or return which wall its hit
-inline bool Box::InsideBox(Particle &p) const{
-    bool inside = ((p.GetPosition().X() < fBounds[1].X())
-                    && (p.GetPosition().Y() < fBounds[1].Y())
-                    && (p.GetPosition().X() > fBounds[0].X())
-                    && (p.GetPosition().Y() > fBounds[0].Y()));
-    return inside;
-}
 
 #endif // BOX_H

@@ -1,3 +1,11 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Particle class that contains information about
+     the particle state (position, movement, mass, radius etc),
+     and methods to change these states
+*/
+
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
@@ -7,12 +15,12 @@ class Particle
 {
 public:
     Particle();
-    //want to specify initialisation?
-    //want to allow specifically setting variables at creation?
-    virtual ~Particle();
+    Particle(double radius): fRadius(radius) {}
+    Particle(Vector2 pos): fPosition(pos){}
+    Particle(Vector2 pos, Vector2 vel): fPosition(pos), fVelocity(vel){}
+    Particle(double, double, Vector2 pos, Vector2 vel, Vector2 force);
 
-    //perhaps public members would be more efficient for the particles
-    //no b/c then they can be changed accidentally
+    virtual ~Particle();
 
     //access methods
     double GetMass() const {return fMass;}
@@ -36,6 +44,9 @@ public:
     const Vector2& GetForce() const {return fForce;}
     void SetForce(const Vector2 & force) {fForce = force;}
 
+    double fx() const {return fForce.x();}
+    double fy() const {return fForce.y();}
+
     void AccumulateForce(const Vector2 & addedForce) {
         fForce += addedForce;
     }
@@ -44,15 +55,12 @@ public:
 
 private:
 
-    double fMass;
-    double fRadius;
-    Vector2 fPosition;
-    Vector2 fVelocity;
-    //?force
-    Vector2 fForce;
+    double fMass = 1;       //kg
+    double fRadius = 0.1;   //m
+    Vector2 fPosition;      //m
+    Vector2 fVelocity;      //m s-1
+    Vector2 fForce;         //kg m s-2
 
-    //colour?
-    //type? (could determine force or particle system could do)
 };
 
 #endif // PARTICLE_H

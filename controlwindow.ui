@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>ControlWindow</class>
  <widget class="QMainWindow" name="ControlWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>225</width>
-    <height>167</height>
+    <width>228</width>
+    <height>223</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,20 +21,23 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
+      <y>42</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Run</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="WallsCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>50</y>
+      <x>20</x>
+      <y>80</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -41,10 +47,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="GravityCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>140</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -54,10 +63,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="FuelCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>10</y>
+      <x>20</x>
+      <y>120</y>
       <width>61</width>
       <height>17</height>
      </rect>
@@ -67,16 +79,19 @@
     </property>
    </widget>
    <widget class="QSlider" name="gravSlider">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>100</y>
+      <y>140</y>
       <width>121</width>
       <height>19</height>
      </rect>
     </property>
     <property name="maximum">
-     <number>49</number>
+     <number>29</number>
     </property>
     <property name="sliderPosition">
      <number>10</number>
@@ -86,10 +101,13 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="CollisionsCB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>50</y>
+      <x>20</x>
+      <y>100</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -98,13 +116,121 @@
      <string>Collisions</string>
     </property>
    </widget>
+   <widget class="QSlider" name="fuelSlider">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="tickPosition">
+     <enum>QSlider::NoTicks</enum>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="waterfallMode">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>90</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waterfall Mode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClearB">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>52</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear the box</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To start the simulation press Run, &lt;br&gt;&lt;/br&gt;then check Fuel to add balls&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="dampingSlider">
+    <property name="geometry">
+     <rect>
+      <x>89</x>
+      <y>160</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>50</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="sliderPosition">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Damping:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>225</width>
+     <width>228</width>
      <height>21</height>
     </rect>
    </property>
@@ -112,5 +238,86 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>FuelCB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>42</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>WallsCB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>22</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CollisionsCB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>28</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>GravityCB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>71</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>fuelSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

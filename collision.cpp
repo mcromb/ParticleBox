@@ -1,3 +1,9 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Collision force class implementation.
+*/
+
 #include "collision.h"
 
 #include "force.h"
@@ -8,97 +14,103 @@
 
 Collision::Collision(): Force("Collision"){}
 
-//p1 = owning particle
-//p2 other particle
-//only call if particles are close enough to collide
+/* ***METHOD***
+    Name:   ParticleCollision
+    IN:     p1,p2   - particles that are colliding
+    About:  Called when two particles are close enough that they have collided.
+     Backtracks time to where they just touch, then conserving momenta, changes
+     their velocity so they have bounced off each other, then advances time again
+     to keep the system consistent
+*/
 void Collision::ParticleCollision(Particle & p1, Particle & p2) {
-    //find moment of collision t
-    //quadratic eq: solve
+    //to find moment of collision t solve the quadratic eq:
     //(dx + t(dvx))^2 + (dy + t(dvy))^2 = touchdist^2
-
-    //degen case where exactly same position - move on aong a bit to solve
-    //check positions the same or just velocity?
-
-    //if gotten to this fn the balls are touching or overlapping (collision already happened p. much)
 
     Vector2 p1pos = p1.GetPosition();
     Vector2 p2pos = p2.GetPosition();
     Vector2 p1vel = p1.GetVelocity();
     Vector2 p2vel = p2.GetVelocity();
-
-    //maincase
-    double dx = p1.x() - p2.x();
-    double dy = p1.y() - p2.y();
-    double dvx = p1.vx() - p2.vx();
-    double dvy = p1.vy() - p2.vy();
-    double touchdist = p1.GetRadius() + p2.GetRadius();
-
-    //could do more efficiently with vectors
-
-    double a = dvx*dvx + dvy*dvy;
-    double b = 2*(dx*dvx + dy*dvy);
-    double c = dx*dx + dy*dy - touchdist*touchdist;
-    double tp = (-b + sqrt(b*b - 4*a*c))/(2*a);
-    double t = (-b - sqrt(b*b - 4*a*c))/(2*a);
-    //half?
-
-    //choose which t value - robs want the -ve one?
-    //if abs t > abs tp, t = tp??
-    if (abs(t) > abs(tp)) {t = tp;}
-
-    //move p1 back to where they collided - t negative?
-    //times t by 2 so not moving both?
-    //or mmove both and calculate how much to move by?
-    //to make total be timestep
-    //important is vector?
-    p1pos += t*p1vel;
-    p2pos += t*p2vel;
-    Vector2 bw = (p2pos - p1pos).Unit();
-
-    //COM vel?
     double p1m = p1.GetMass();
     double p2m = p2.GetMass();
-    double totMass = p1m + p2m;
-    //Vector2 CoM = (p1m*p1vel + p2m*p2vel)/totMass;
 
-    //dot product (component for 1d collision)
+    double touchdist = p1.GetRadius() + p2.GetRadius();
+    Vector2 d = p2pos - p1pos;
+    Vector2 dv = p2vel - p1vel;
+
+    //calculate coefficients of the quadratic
+    double a = dv.Mag2();
+    double b = 2*dv.Dot(d);
+    double c = d.Mag2() - touchdist*touchdist;
+
+    //solve the quadratic
+    double tp = (-b + sqrt(b*b - 4*a*c))/(2*a);
+    double t = (-b - sqrt(b*b - 4*a*c))/(2*a);
+
+    //pick the correct root
+    if (abs(t) > abs(tp)) {t = tp;}
+
+    //move the particles back to just touching
+    //t is generally negative
+    p1pos += t*p1vel;
+    p2pos += t*p2vel;
+
+    //elastically collide the particles conserving momentum
+
+    double totMass = p1m + p2m;
+    Vector2 bw = (p2pos - p1pos).Unit();
+    //find the initial velocity components along the line between the
+    //particle centres to convert into a 1D collision
     double u1 = bw.Dot(p1vel);
     double u2 = bw.Dot(p2vel);
-    //one should be pos and one neg
-
+    //find the final velocity components
     double v1 = (u1*(p1m-p2m)+2*p2m*u2)/totMass;
     double v2 = (u2*(p2m-p1m)+2*p1m*u1)/totMass;
 
+    //add the velocity changes to the particle
     p1vel += (v1-u1)*bw;
     p2vel += (v2-u2)*bw;
 
-    //iterate positions to the right time?
+    //iterate positions forward to the right time
     p1pos -= t*p1vel;
     p2pos -= t*p2vel;
 
+    //update particles
+    //collision forces are impulses so change velocity instantaneously
     p1.SetPosition(p1pos);
     p2.SetPosition(p2pos);
     p1.SetVelocity(p1vel);
     p2.SetVelocity(p2vel);
 
-    //want to be outputting a force on each? impulse tho
 }
 
+/* ***METHOD***
+    Name:   ApplyForce
+    IN:     particles - set of particles that can collide with each other
+    About:  checks each particle for collisions against the rest of the particles, one by one
+     if a collision is found, their velocities are updated in ParticleCollisions.
+     This 'Force' actual changes the velocities not the forces of the particles because it is an impulse
+     and so happens instantaneously
+*/
 void Collision::ApplyForce(std::vector<Particle*> & particles){
     for (unsigned int i =0; i < particles.size(); i++){
+        // loop over j=i+1 means it doesn't check for collision with itself
+        // and also only checks itself (i) against those that haven't already
+        //checked themselves against others
         for (unsigned int j=i+1; j < particles.size(); j++) {
-            //pass the pointer or the object (fn would use by ref if not pointer)
             if (Collided(*(particles[i]),*(particles[j]))){
-                //std::cout << "Collided:" << i << ", " << j << std::endl;
                 ParticleCollision(*(particles[i]), *(particles[j]));
-                //this fn should update the acceleration of the particle(s)
             }
         }
     }
 }
 
-//this misses (at best) if speed is faster than 2*touchdist/fTimestep
-//note cases of offset collisions
+/* ***METHOD***
+    Name:   Collided
+    IN:     p1,p2   - particles testing for collision
+    OUT:    rtn     - true if the particles are overlapping and thus have collided
+    About:  Tests whether two particles have overlapped and so should be colliding
+        (note: at high particle speeds or short timesteps this can miss collisions)
+*/
 bool Collision::Collided(Particle & p1, Particle & p2){
     bool rtn;
     Vector2 between = p2.GetPosition() - p1.GetPosition();

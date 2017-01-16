@@ -1,3 +1,9 @@
+/*  Name: Marion Cromb
+    Project: 2D balls in a box
+    Date Due: 20/01/17
+    Summary: Implementation of the Particle class
+*/
+
 #include "Particle.h"
 #include "Vector2.h"
 
@@ -5,13 +11,28 @@
 
 Particle::Particle()
 {
-    fMass = 1;
-    fRadius = 0.1;
+    //Mass and radius initialised in header
 }
+
+Particle::Particle(double mass,
+                   double radius,
+                   Vector2 pos,
+                   Vector2 vel,
+                   Vector2 force):
+    fMass(mass),
+    fRadius(radius),
+    fPosition(pos),
+    fVelocity(vel),
+    fForce(force) {}
 
 Particle::~Particle(){
 }
 
+/* ***METHOD***
+    Name:   Print
+    About:  Utility method, prints the particle information.
+     Useful for debugging.
+*/
 void Particle::Print() const{
     std::cout << "Mass: " << fMass << std::endl;
     std::cout << "Radius: " << fRadius <<std::endl;

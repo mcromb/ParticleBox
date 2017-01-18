@@ -117,6 +117,19 @@ void ControlWindow::on_runButton_clicked()
         }
         //Change the status
         fStatus = kRun;
+
+        //enable buttons (important on first run)
+        ui->ClearB->setEnabled(true);
+        ui->CollisionsCB->setEnabled(true);
+        ui->dampingSlider->setEnabled(true);
+        ui->FuelCB->setEnabled(true);
+        ui->fuelSlider->setEnabled(true);
+        ui->GravityCB->setEnabled(true);
+        ui->gravSlider->setEnabled(true);
+        ui->label_2->setEnabled(true);
+        ui->WallsCB->setEnabled(true);
+        ui->waterfallMode->setEnabled(true);
+
     }else {
         ui->runButton->setStyleSheet("background-color:red"); //toggle
         ui->runButton->setText("Run"); //toggle
@@ -132,12 +145,14 @@ void ControlWindow::on_runButton_clicked()
 */
 void ControlWindow::on_WallsCB_stateChanged(int state)
 {
-    if (state == Qt::Checked) {
-        //Solid walls
-        fSystem->SetWallStatus(0);
-    } else {
-        //permeable walls
-        fSystem->SetWallStatus(1);
+    if (fStatus == kRun) {
+        if (state == Qt::Checked) {
+            //Solid walls
+            fSystem->SetWallStatus(0);
+        } else {
+            //permeable walls
+            fSystem->SetWallStatus(1);
+        }
     }
 }
 
@@ -148,17 +163,19 @@ void ControlWindow::on_WallsCB_stateChanged(int state)
 */
 void ControlWindow::on_GravityCB_stateChanged(int state)
 {
-    if (state == Qt::Checked){
-        //turn gravity on
-        Gravity *grav = new Gravity();
-        fSystem->AddForce(grav);
-        if (fGravSliderStored != -1){
-            //if the value has been changed from default
-            grav->SetGravity((double)fGravSliderStored);
+    if (fStatus == kRun) {
+        if (state == Qt::Checked){
+            //turn gravity on
+            Gravity *grav = new Gravity();
+            fSystem->AddForce(grav);
+            if (fGravSliderStored != -1){
+                //if the value has been changed from default
+                grav->SetGravity((double)fGravSliderStored);
+            }
+        }else {
+            //remove gravity
+            fSystem->RemoveForce("Gravity");
         }
-    }else {
-        //remove gravity
-        fSystem->RemoveForce("Gravity");
     }
 }
 
@@ -183,13 +200,15 @@ void ControlWindow::on_FuelCB_stateChanged(int state)
 */
 void ControlWindow::on_CollisionsCB_stateChanged(int state)
 {
-    if (state == Qt::Checked){
-        //add collisions
-        Collision *collision = new Collision();
-        fSystem->AddForce(collision);        
-    }else {
-        //remove collisions
-        fSystem->RemoveForce("Collision");
+    if (fStatus == kRun) {
+        if (state == Qt::Checked){
+            //add collisions
+            Collision *collision = new Collision();
+            fSystem->AddForce(collision);
+        }else {
+            //remove collisions
+            fSystem->RemoveForce("Collision");
+        }
     }
 }
 
@@ -201,14 +220,16 @@ void ControlWindow::on_CollisionsCB_stateChanged(int state)
 */
 void ControlWindow::on_gravSlider_valueChanged(int value)
 {
-    Gravity* force = (Gravity*)fSystem->FindForce("Gravity");
-    if (force != NULL) {
-        //if gravity is active in the system change the value
-        force->SetGravity((double)value);
-    }else {
-        //note that the gravity slider value has changed and
-        //store the value in case gravity is activated later
-        fGravSliderStored = value;
+    if (fStatus == kRun) {
+        Gravity* force = (Gravity*)fSystem->FindForce("Gravity");
+        if (force != NULL) {
+            //if gravity is active in the system change the value
+            force->SetGravity((double)value);
+        }else {
+            //note that the gravity slider value has changed and
+            //store the value in case gravity is activated later
+            fGravSliderStored = value;
+        }
     }
 }
 
@@ -230,29 +251,31 @@ void ControlWindow::on_fuelSlider_valueChanged(int value)
 */
 void ControlWindow::on_waterfallMode_toggled(bool checked)
 {
-    if (checked == true){
-        //Start Waterfall Mode
-        fMode = kWaterfall;
-        //Set changes to checkboxes for Waterfall mode
-        //The checkboxes are disabled to user input by other slots
-        if (!(ui->FuelCB->isChecked())){
-            ui->FuelCB->setChecked(Qt::Checked);
-        }
-        if (ui->CollisionsCB->isChecked()){
-            ui->CollisionsCB->setChecked(Qt::Unchecked);
-        }
-        if (!(ui->GravityCB->isChecked())){
-            ui->GravityCB->setChecked(Qt::Checked);
-        }
-        if (ui->WallsCB->isChecked()){
-            ui->WallsCB->setChecked(Qt::Unchecked);
-        }
-    } else{
-        fMode = kBox;
-        //Switch off fuelling after changing back to box mode so the
-        //transition is less confusing
-        if (ui->FuelCB->isChecked()){
-            ui->FuelCB->setChecked(Qt::Unchecked);
+    if (fStatus == kRun) {
+        if (checked == true){
+            //Start Waterfall Mode
+            fMode = kWaterfall;
+            //Set changes to checkboxes for Waterfall mode
+            //The checkboxes are disabled to user input by other slots
+            if (!(ui->FuelCB->isChecked())){
+                ui->FuelCB->setChecked(Qt::Checked);
+            }
+            if (ui->CollisionsCB->isChecked()){
+                ui->CollisionsCB->setChecked(Qt::Unchecked);
+            }
+            if (!(ui->GravityCB->isChecked())){
+                ui->GravityCB->setChecked(Qt::Checked);
+            }
+            if (ui->WallsCB->isChecked()){
+                ui->WallsCB->setChecked(Qt::Unchecked);
+            }
+        } else{
+            fMode = kBox;
+            //Switch off fuelling after changing back to box mode so the
+            //transition is less confusing
+            if (ui->FuelCB->isChecked()){
+                ui->FuelCB->setChecked(Qt::Unchecked);
+            }
         }
     }
 }
@@ -263,7 +286,9 @@ void ControlWindow::on_waterfallMode_toggled(bool checked)
 */
 void ControlWindow::on_ClearB_clicked()
 {
-    fSystem->ClearParticles();
+    if (fStatus == kRun) {
+        fSystem->ClearParticles();
+    }
 }
 
 /* ***METHOD***
@@ -273,5 +298,7 @@ void ControlWindow::on_ClearB_clicked()
 */
 void ControlWindow::on_dampingSlider_valueChanged(int value)
 {
-    fSystem->SetWallDamping((double)value/100.0);
+    if (fStatus == kRun) {
+        fSystem->SetWallDamping((double)value/100.0);
+    }
 }

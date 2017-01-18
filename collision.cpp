@@ -86,9 +86,9 @@ void Collision::ParticleCollision(Particle & p1, Particle & p2) {
 /* ***METHOD***
     Name:   ApplyForce
     IN:     particles - set of particles that can collide with each other
-    About:  checks each particle for collisions against the rest of the particles, one by one
+    About:  Checks each particle for collisions against the rest of the particles, one by one
      if a collision is found, their velocities are updated in ParticleCollisions.
-     This 'Force' actual changes the velocities not the forces of the particles because it is an impulse
+     This 'Force' actually changes the velocities not the forces of the particles because it is an impulse
      and so happens instantaneously
 */
 void Collision::ApplyForce(std::vector<Particle*> & particles){

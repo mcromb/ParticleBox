@@ -17,11 +17,13 @@ class Collision : public Force
 public:
     Collision();
 
-    void ParticleCollision(Particle &, Particle &);
-
     void ApplyForce(std::vector<Particle*> &);
 
+private:
     bool Collided(Particle &, Particle &);
+
+    void ParticleCollision(Particle &, Particle &);
+
 };
 
 #endif // COLLISION_H

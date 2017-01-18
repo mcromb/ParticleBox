@@ -32,7 +32,7 @@
    </widget>
    <widget class="QCheckBox" name="WallsCB">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -48,7 +48,7 @@
    </widget>
    <widget class="QCheckBox" name="GravityCB">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -64,7 +64,7 @@
    </widget>
    <widget class="QCheckBox" name="FuelCB">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -80,7 +80,7 @@
    </widget>
    <widget class="QSlider" name="gravSlider">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -102,7 +102,7 @@
    </widget>
    <widget class="QCheckBox" name="CollisionsCB">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -118,7 +118,7 @@
    </widget>
    <widget class="QSlider" name="fuelSlider">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -146,7 +146,7 @@
    </widget>
    <widget class="QRadioButton" name="waterfallMode">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -162,7 +162,7 @@
    </widget>
    <widget class="QPushButton" name="ClearB">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -190,6 +190,9 @@
     </property>
    </widget>
    <widget class="QSlider" name="dampingSlider">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>89</x>
@@ -212,6 +215,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -221,7 +227,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Damping:</string>
+     <string>COR:</string>
     </property>
    </widget>
   </widget>

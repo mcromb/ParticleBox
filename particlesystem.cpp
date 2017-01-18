@@ -175,6 +175,7 @@ void ParticleSystem::Update() {
     About:  If the particle is moving out through a wall, collide the particle
      with the wall and send it back again. If fWallDamping = 1 the collision is elastic,
      otherwise the ball loses energy. This function is only called if the walls are solid.
+     This system doesn't find and use the time of collision, so it is flawed - particles can slowly move through the wall.
 */
 void ParticleSystem::WallBounce(Particle* p) {
     Vector2 pos = p->GetPosition();

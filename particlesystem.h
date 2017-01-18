@@ -2,7 +2,7 @@
     Project: 2D balls in a box
     Date Due: 20/01/17
     Summary: Particle system class that contains a set of particles,
-     the container of the particles, and the forces active in the system
+     the box containing the particles, and the forces active in the system
 */
 
 #ifndef PARTICLESYSTEM_H
@@ -63,7 +63,7 @@ private:
     std::vector<Force*> fForces;
 
     //Limits number of colliding particles
-    //The program can deal with 150 before lagging
+    //The program can deal with ~150 before lagging
     int fMaxColliding = 150;
 
     double fMaxSpeed = 3.0;

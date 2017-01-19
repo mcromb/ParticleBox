@@ -145,14 +145,12 @@ void ControlWindow::on_runButton_clicked()
 */
 void ControlWindow::on_WallsCB_stateChanged(int state)
 {
-    if (fStatus == kRun) {
-        if (state == Qt::Checked) {
-            //Solid walls
-            fSystem->SetWallStatus(0);
-        } else {
-            //permeable walls
-            fSystem->SetWallStatus(1);
-        }
+    if (state == Qt::Checked) {
+        //Solid walls
+        fSystem->SetWallStatus(0);
+    } else {
+        //permeable walls
+        fSystem->SetWallStatus(1);
     }
 }
 
@@ -163,20 +161,19 @@ void ControlWindow::on_WallsCB_stateChanged(int state)
 */
 void ControlWindow::on_GravityCB_stateChanged(int state)
 {
-    if (fStatus == kRun) {
-        if (state == Qt::Checked){
-            //turn gravity on
-            Gravity *grav = new Gravity();
-            fSystem->AddForce(grav);
-            if (fGravSliderStored != -1){
-                //if the value has been changed from default
-                grav->SetGravity((double)fGravSliderStored);
-            }
-        }else {
-            //remove gravity
-            fSystem->RemoveForce("Gravity");
+    if (state == Qt::Checked){
+        //turn gravity on
+        Gravity *grav = new Gravity();
+        fSystem->AddForce(grav);
+        if (fGravSliderStored != -1){
+            //if the value has been changed from default
+            grav->SetGravity((double)fGravSliderStored);
         }
+    }else {
+        //remove gravity
+        fSystem->RemoveForce("Gravity");
     }
+
 }
 
 /* ***METHOD***
@@ -200,15 +197,13 @@ void ControlWindow::on_FuelCB_stateChanged(int state)
 */
 void ControlWindow::on_CollisionsCB_stateChanged(int state)
 {
-    if (fStatus == kRun) {
-        if (state == Qt::Checked){
-            //add collisions
-            Collision *collision = new Collision();
-            fSystem->AddForce(collision);
-        }else {
-            //remove collisions
-            fSystem->RemoveForce("Collision");
-        }
+    if (state == Qt::Checked){
+        //add collisions
+        Collision *collision = new Collision();
+        fSystem->AddForce(collision);
+    }else {
+        //remove collisions
+        fSystem->RemoveForce("Collision");
     }
 }
 
@@ -251,33 +246,32 @@ void ControlWindow::on_fuelSlider_valueChanged(int value)
 */
 void ControlWindow::on_waterfallMode_toggled(bool checked)
 {
-    if (fStatus == kRun) {
-        if (checked == true){
-            //Start Waterfall Mode
-            fMode = kWaterfall;
-            //Set changes to checkboxes for Waterfall mode
-            //The checkboxes are disabled to user input by other slots
-            if (!(ui->FuelCB->isChecked())){
-                ui->FuelCB->setChecked(Qt::Checked);
-            }
-            if (ui->CollisionsCB->isChecked()){
-                ui->CollisionsCB->setChecked(Qt::Unchecked);
-            }
-            if (!(ui->GravityCB->isChecked())){
-                ui->GravityCB->setChecked(Qt::Checked);
-            }
-            if (ui->WallsCB->isChecked()){
-                ui->WallsCB->setChecked(Qt::Unchecked);
-            }
-        } else{
-            fMode = kBox;
-            //Switch off fuelling after changing back to box mode so the
-            //transition is less confusing
-            if (ui->FuelCB->isChecked()){
-                ui->FuelCB->setChecked(Qt::Unchecked);
-            }
+    if (checked == true){
+        //Start Waterfall Mode
+        fMode = kWaterfall;
+        //Set changes to checkboxes for Waterfall mode
+        //The checkboxes are disabled to user input by other slots
+        if (!(ui->FuelCB->isChecked())){
+            ui->FuelCB->setChecked(Qt::Checked);
+        }
+        if (ui->CollisionsCB->isChecked()){
+            ui->CollisionsCB->setChecked(Qt::Unchecked);
+        }
+        if (!(ui->GravityCB->isChecked())){
+            ui->GravityCB->setChecked(Qt::Checked);
+        }
+        if (ui->WallsCB->isChecked()){
+            ui->WallsCB->setChecked(Qt::Unchecked);
+        }
+    } else{
+        fMode = kBox;
+        //Switch off fuelling after changing back to box mode so the
+        //transition is less confusing
+        if (ui->FuelCB->isChecked()){
+            ui->FuelCB->setChecked(Qt::Unchecked);
         }
     }
+
 }
 
 /* ***METHOD***
@@ -286,9 +280,7 @@ void ControlWindow::on_waterfallMode_toggled(bool checked)
 */
 void ControlWindow::on_ClearB_clicked()
 {
-    if (fStatus == kRun) {
         fSystem->ClearParticles();
-    }
 }
 
 /* ***METHOD***
@@ -298,7 +290,5 @@ void ControlWindow::on_ClearB_clicked()
 */
 void ControlWindow::on_dampingSlider_valueChanged(int value)
 {
-    if (fStatus == kRun) {
-        fSystem->SetWallDamping((double)value/100.0);
-    }
+    fSystem->SetWallDamping((double)value/100.0);
 }

@@ -253,11 +253,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>145</x>
-     <y>80</y>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>42</x>
-     <y>108</y>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -269,11 +269,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>112</x>
-     <y>82</y>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>22</x>
-     <y>71</y>
+     <y>101</y>
     </hint>
    </hints>
   </connection>
@@ -285,11 +285,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>112</x>
-     <y>76</y>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>28</x>
-     <y>92</y>
+     <y>121</y>
     </hint>
    </hints>
   </connection>
@@ -301,11 +301,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>168</x>
-     <y>81</y>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>71</x>
-     <y>132</y>
+     <y>161</y>
     </hint>
    </hints>
   </connection>
@@ -317,11 +317,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>79</y>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>129</x>
-     <y>103</y>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dampingSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waterfallMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_2</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>57</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
